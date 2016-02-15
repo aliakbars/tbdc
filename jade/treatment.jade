@@ -1,0 +1,88 @@
+extends patient
+
+block header
+  h1(class="page-header") Treatment
+
+block patient_form
+  form(action="patient.html")
+    legend Treatment
+    .row#drugs
+      div(class="form-group col-xs-4")
+        label(for="medication[]") Medication
+        select(class="form-control", name="medication[]")
+          option FDC 4 combination (HRZE)
+          option FDC 2 combination (HR)
+          option Isoniazid (H)
+          option Rifampisin (R)
+          option Pirazinamid (Z)
+          option Etambutol (E)
+          option Streptomisin (S)
+          option FDC for children (HRZ)
+          option Kanamysin (Km)
+          option Capreomysin (Cm)
+          option Levofloksasin (Lfx)
+          option Moksifloksasin (Mfx)
+          option Ethionamide (Etio)
+          option Cycloserine (Cs)
+          option Para-aminosalicyclic Acid (PAS)
+      div(class="form-group col-xs-4")
+        label(for="doses[]") Doses
+        .input-group
+          input(type="text", class="form-control", id="", name="doses[]", placeholder="")
+          span(class="input-group-addon") mg/kg weight
+      div(class="form-group col-xs-4")
+        label(for="frequency[]") Frequency
+        .input-group
+          select(class="form-control", name="frequency[]")
+            option Daily
+            option 3 times a week
+            option 5 times a week
+            option Others
+    span(class="btn btn-default btn-sm", id="add-treatment") Add another
+    legend Side Effects
+    div(class="checkbox")
+      label(for="Jaundice")
+      input(type="checkbox", id="jaundice")
+      | Jaundice
+    div(class="checkbox")
+      label(for="Fever")
+      input(type="checkbox", id="fever")
+      | Fever
+    div(class="checkbox")
+      label(for="numbness")
+      input(type="checkbox", id="numbness")
+      | Tingling or numbness in your hands or feet
+    div(class="checkbox")
+      label(for="itchy")
+      input(type="checkbox", id="itchy")
+      | A rash or itchy skin
+    div(class="checkbox")
+      label(for="blurred_vision")
+      input(type="checkbox", id="blurred_vision")
+      | Changes to the eye vision, such as blurred vision
+    div(class="checkbox")
+      label(for="nausea")
+      input(type="checkbox", id="nausea")
+      | Nausea
+    div(class="checkbox")
+      label(for="vomiting")
+      input(type="checkbox", id="vomiting")
+      | Vomiting
+    div(class="checkbox")
+      label(for="others")
+      input(type="checkbox", id="others")
+      | Others
+    legend Drug Resistant Test
+    div(class="form-group")
+      label(for="drug_resistant") Select one:
+      .input-group
+        select(class="form-control", name="drug_resistant")
+          option None
+          option Mono resistance
+          option Poly resistance
+          option Multi Drug Resistance (MDR)
+          option Extensively Drug Resistance (XDR)
+          option Total Drug Resistance (TDR)
+          option Rifampicin Resistance (RR)
+    button(type="submit", class="btn btn-primary") Submit
+    a(href="patient.html", class="btn btn-default") Cancel

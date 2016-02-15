@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tuberculosis Detection and Care System">
+    <meta name="author" content="Garuda2045">
+    <title>TBDeCare</title>
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="dist/css/font-awesome.min.css" rel="stylesheet">
+    <link href="dist/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="dist/css/dashboard.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand">TBDeCare</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" placeholder="Search..." class="form-control">
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="index.html">Overview</a></li>
+            <li><a href="findpatient.html">Patients</a></li>
+            <li><a href="#">Analytics</a></li>
+            <li><a href="#">Export</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Find Patient Record</h1>
+          <form>
+            <div class="form-group">
+              <label for="query">Find patient(s)</label>
+              <input type="text" id="query" placeholder="Search by ID or name" class="form-control">
+            </div>
+          </form>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Identifier</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Birthdate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="patient.html">A110</a></td>
+                <td>Joe Blitzstein</td>
+                <td>M</td>
+                <td>1969-04-11</td>
+              </tr>
+              <tr>
+                <td><a href="patient.html">A111</a></td>
+                <td>John Doe</td>
+                <td>M</td>
+                <td>1950-11-05</td>
+              </tr>
+              <tr>
+                <td><a href="patient.html">A112</a></td>
+                <td>Judy Garland</td>
+                <td>F</td>
+                <td>1969-06-22</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="dist/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

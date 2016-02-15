@@ -1,0 +1,106 @@
+extends patient
+
+block header
+  h1(class="page-header") TB Form
+
+block patient_form
+  form(action="patient.html")
+
+    legend Symptoms
+    div(class="checkbox")
+      label(for="cough")
+        input(type="checkbox", id="cough", placeholder="")
+        |  Coughing that lasts three or more weeks
+    div(class="checkbox")
+      label(for="haemoptysis")
+        input(type="checkbox", id="haemoptysis", placeholder="")
+        |  Coughing up blood
+    div(class="checkbox")
+      label(for="chest_pain")
+        input(type="checkbox", id="chest_pain", placeholder="")
+        |  Chest pain, or pain with breathing or coughing
+    div(class="checkbox")
+      label(for="weight_loss")
+        input(type="checkbox", id="weight_loss", placeholder="")
+        |  Unintentional weight loss
+    div(class="checkbox")
+      label(for="fatigue")
+        input(type="checkbox", id="fatigue", placeholder="")
+        |  Fatigue
+    div(class="checkbox")
+      label(for="fever")
+        input(type="checkbox", id="fever", placeholder="")
+        |  Fever
+    div(class="checkbox")
+      label(for="night_sweats")
+        input(type="checkbox", id="night_sweats", placeholder="")
+        |  Night sweats
+    div(class="checkbox")
+      label(for="chills")
+        input(type="checkbox", id="chills", placeholder="")
+        |  Chills
+    div(class="checkbox")
+      label(for="other_symptoms")
+        input(type="checkbox", id="other_symptoms", placeholder="")
+        |  Others
+
+    legend Diagnosis
+    div(class="form-group")
+      label(for="address") Diagnosis
+      select(class="form-control")
+        option Suspect TB
+        option Confirm positive TB
+        option Negative TB
+    div(class="form-group")
+      label(for="address") TB Patient's Status
+      select(class="form-control")
+        option New
+        option Chronic
+        option Relapse
+        option Drop out
+
+    legend Underlying Medical Condition
+    div(class="checkbox")
+      label(for="meningitis")
+        input(type="checkbox", id="meningitis")
+        |  Meningitis
+    div(class="checkbox")
+      label(for="pregnant")
+        input(type="checkbox", id="pregnant")
+        |  Pregnant
+    div(class="checkbox")
+      label(for="immunocompromised")
+        input(type="checkbox", id="immunocompromised")
+        |  Immunocompromised patient
+    div(class="checkbox")
+      label(for="malnutrition")
+        input(type="checkbox", id="malnutrition")
+        |  Malnutrition
+    div(class="checkbox")
+      label(for="coinfection")
+        input(type="checkbox", id="coinfection")
+        |  Co-infection with any infectious disease
+    div(class="checkbox")
+      label(for="comorbid")
+        input(type="checkbox", id="comorbid")
+        |  Others
+
+    legend HIV Infection
+    div(class="form-group")
+      label(for="hiv") Is the patient infected by HIV?
+      select(class="form-control", name="hiv")
+        option Yes
+        option No
+        option Unknown
+
+    legend TB Exposure
+    div(class="form-group")
+      label(for="tb_exposure") Select one:
+      select(class="form-control", name="tb_exposure")
+        option One member of family in the same house had previous TB
+        option One member of family in the same house has active TB infection
+        option Contact with person infected with TB
+        option Unknown
+
+    button(type="submit", class="btn btn-primary") Submit
+    a(href="patient.html", class="btn btn-default") Cancel

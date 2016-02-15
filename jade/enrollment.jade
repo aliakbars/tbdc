@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1(class="page-header") Enroll New Patient
+  form(action="patient.html")
+    legend Demographics
+    div(class="form-group")
+      label(for="first_name") Given Name
+      input(type="text", class="form-control", id="first_name", placeholder="")
+    div(class="form-group")
+      label(for="last_name") Family Name
+      input(type="text", class="form-control", id="last_name", placeholder="")
+    div(class="form-group")
+      label(for="birthdate") Birthdate
+      input(type="text", class="form-control", id="birthdate", placeholder="YYYY-MM-DD")
+    div(class="form-group")
+      label(for="gender") Gender
+      label(class="radio-inline")
+        input(type="radio", name="gender", id="inlineRadio1", value="M")
+        | Male
+      label(class="radio-inline")
+        input(type="radio", name="gender", id="inlineRadio2", value="F")
+        | Female
+    legend Contact Info
+    div(class="form-group")
+      label(for="address") Address
+      input(type="text", class="form-control", id="address", placeholder="")
+    div(class="form-group")
+      label(for="address2") Address 2
+      input(type="text", class="form-control", id="address2", placeholder="")
+    div(class="form-group")
+      label(for="city") City/Village
+      input(type="text", class="form-control", id="city", placeholder="")
+    div(class="form-group")
+      label(for="province") State/Province
+      input(type="text", class="form-control", id="province", placeholder="")
+    div(class="form-group")
+      label(for="country") Country
+      input(type="text", class="form-control", id="country", placeholder="")
+    div(class="form-group")
+      label(for="phone") Phone Number
+      input(type="phone", class="form-control", id="phone", placeholder="")
+    button(type="submit", class="btn btn-primary") Submit
+    a(href="patient.html", class="btn btn-default") Cancel

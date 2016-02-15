@@ -1,0 +1,104 @@
+- var vitals = {'Height': '166 cm', 'Weight': '72 kg', 'Temperature': '43°C', 'Pulse': '85/min', 'Respiratory rate': '89/min', 'Blood pressure': '120/80'};
+
+extends layout
+
+block content
+  block header
+    h1(class="page-header") Patient Dashboard
+  h2 Joe Blitzstein
+    span(class="pull-right") Patient ID: A110
+  p Male, 46 year(s) - 1969-04-11
+  hr
+  block patient_form
+    .row
+      div(class="col-sm-5")
+        //- Left Panel
+        div(class="panel panel-primary")
+          div(class="panel-heading")
+            h3(class="panel-title")
+              i(class="fa fa-stethoscope")
+              |  Diagnoses
+          div(class="panel-body")
+            strong Last updated: 16.Feb.2016
+          ul(class="list-group")
+            li(class="list-group-item") TB Positive
+            li(class="list-group-item") MDR Negative
+
+        div(class="panel panel-success")
+          div(class="panel-heading")
+            h3(class="panel-title")
+              i(class="fa fa-heartbeat")
+              |  Vitals
+          div(class="panel-body")
+            strong Last updated: 10.Jan.2016
+          ul(class="list-group")
+            for value, key in {'Height': '166 cm', 'Weight': '72 kg', 'Temperature': '43°C', 'Pulse': '85/min', 'Respiratory rate': '89/min', 'Blood pressure': '120/80'}
+              li(class="list-group-item")
+                span(class="text-success")= key
+                span(class="pull-right")= value
+
+        div(class="panel panel-warning")
+          div(class="panel-heading")
+            h3(class="panel-title")
+              i(class="fa fa-file-text")
+              |  Lab Result
+          table(class="table")
+            thead
+              tr
+                th Test
+                th Result
+                th Date
+            tbody
+              tr
+                td TB Culture
+                td TB positive
+                td 13.Feb.2016
+              tr
+                td
+                  a(href="#") X-Ray
+                td Pulmonary TB
+                td 22.Jan.2016
+              tr
+                td
+                  a(href="#") Microscopic AFB
+                td TB negative
+                td 15.Jan.2016
+
+      div(class="col-sm-5")
+        //- Right panel
+        div(class="panel panel-primary")
+          div(class="panel-heading")
+            h3(class="panel-title")
+              span(class="glyphicon glyphicon-calendar", aria-hidden="true")
+              |  Appointments
+          div(class="panel-body")
+            strong Upcoming appointment: 14.Mar.2016
+          div(class="list-group")
+            a(class="list-group-item", href="#") 10.Feb.2016
+            a(class="list-group-item", href="#") 09.Jan.2016
+
+        div(class="panel panel-info")
+          div(class="panel-heading")
+            h3(class="panel-title")
+              span(class="glyphicon glyphicon-pencil", aria-hidden="true")
+              |  Notes
+          div(class="panel-body")
+            div(class="col-sm-12")
+              |  None
+
+      div(class="col-sm-2")
+        legend Current Visit Actions
+        ul
+          li
+            a(href="#") End Visit
+          li
+            a(href="screening.html") TB Form
+          li
+            a(href="note.html") Visit Notes
+          li
+            a(href="vitals.html") Capture Vitals
+          li
+            a(href="treatment.html") Treatment
+        legend General Actions
+        ul
+          li Schedule Appointment

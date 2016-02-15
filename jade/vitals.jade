@@ -1,0 +1,41 @@
+extends patient
+
+block header
+  h1(class="page-header") Vitals
+
+block patient_form
+  form(action="patient.html")
+    div(class="form-group")
+      label(for="height") Height (cm)
+      .input-group
+        input(type="text", class="form-control", id="height", name="height", placeholder="")
+        span(class="input-group-addon") cm
+    div(class="form-group")
+      label(for="weight") Weight (kg)
+      .input-group
+        input(type="text", class="form-control", id="weight", name="weight", placeholder="")
+        span(class="input-group-addon") kg
+    div(class="form-group")
+      label(for="temperature") Temperature (°C)
+      .input-group
+        input(type="text", class="form-control", id="temperature", name="temperature", placeholder="")
+        span(class="input-group-addon") °C
+    div(class="form-group")
+      label(for="pulse") Pulse
+      .input-group
+        input(type="text", class="form-control", id="pulse", name="pulse", placeholder="")
+        span(class="input-group-addon") /min
+    div(class="form-group")
+      label(for="respiratory_rate") Respiratory rate
+      .input-group
+        input(type="text", class="form-control", id="respiratory_rate", name="respiratory_rate", placeholder="")
+        span(class="input-group-addon") /min
+    div(class="form-group")
+      label(for="blood_pressure") Blood pressure
+      .row
+        .col-xs-2
+          input(type="text", class="form-control", id="blood_pressure_s", name="blood_pressure_s", placeholder="")
+        .col-xs-2
+          input(type="text", class="form-control", id="blood_pressure_d", name="blood_pressure_d", placeholder="")
+    button(type="submit", class="btn btn-primary") Submit
+    a(href="patient.html", class="btn btn-default") Cancel
