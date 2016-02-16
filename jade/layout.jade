@@ -51,7 +51,8 @@ html
         div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main")
           block content
 
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")
-    script window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
-    script(src="dist/js/bootstrap.min.js")
-    script(src="dist/js/ie10-viewport-bug-workaround.js")
+    block scripts
+      script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")
+      script window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+      script(src="dist/js/bootstrap.min.js")
+      script(src="dist/js/ie10-viewport-bug-workaround.js")

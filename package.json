@@ -12,6 +12,9 @@
     "gulp": "~3.9.1",
     "gulp-jade": "~1.1.0",
     "webpack": "~1.12.13",
-    "gulp-data": "~1.2.1"
+    "gulp-data": "~1.2.1",
+    "babel-preset-es2015": "~6.5.0",
+    "babel-loader": "~6.2.1",
+    "babel-core": "~6.5.2"
   }
 }

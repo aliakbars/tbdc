@@ -2,22 +2,7 @@ extends layout
 
 block content
   h1(class="page-header") Find Patient Record
-  form
-    div(class="form-group")
-      label(for="query") Find patient(s)
-      input(type="text", class="form-control", id="query", placeholder="Search by ID or name")
+  #patient-list
 
-  table(class="table table-hover")
-    thead
-      tr
-        th Identifier
-        th Name
-        th Gender
-        th Birthdate
-    tbody
-      each patient in patients
-        tr
-          td <a href="patient.html">#{patient.identifier}</a>
-          td #{patient.name}
-          td #{patient.gender}
-          td #{patient.birthdate}
+block append scripts
+  script(src="dist/js/bundle.js")
