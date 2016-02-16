@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var data = require('gulp-data');
 var jade = require('gulp-jade');
+var gutil = require('gulp-util');
 var webpack = require('webpack');
 var webpackConfig = require('./webpack.config.js');
 
@@ -16,9 +17,9 @@ gulp.task('jade', function(event) {
 gulp.task('webpack', function(done) {
     webpack(webpackConfig).run(function(err, stats) {
         if (err) {
-          // gutil.log('Error', err);
+          gutil.log('Error', err);
         } else {
-          // gutil.log(stats.toString());
+          gutil.log(stats.toString());
         }
         done();
     });

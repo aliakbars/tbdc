@@ -67,7 +67,7 @@ var List = React.createClass({
   render: function() {
     var patients = this.props.patients.map(function(patient) {
       return (<tr key={patient.identifier}>
-        <td>{patient.identifier}</td>
+        <td><a href="patient.html">{patient.identifier}</a></td>
         <td>{patient.name}</td>
         <td>{patient.gender}</td>
         <td>{patient.birthdate}</td>

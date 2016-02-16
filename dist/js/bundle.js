@@ -149,7 +149,11 @@
 	        React.createElement(
 	          'td',
 	          null,
-	          patient.identifier
+	          React.createElement(
+	            'a',
+	            { href: 'patient.html' },
+	            patient.identifier
+	          )
 	        ),
 	        React.createElement(
 	          'td',
