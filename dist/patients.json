@@ -1,0 +1,22 @@
+{
+    "patients": [
+        {
+            "birthdate": "1969-04-11",
+            "gender": "M",
+            "identifier": "A110",
+            "name": "Joe Blitzstein"
+        },
+        {
+            "birthdate": "1950-11-05",
+            "gender": "M",
+            "identifier": "A111",
+            "name": "John Doe"
+        },
+        {
+            "birthdate": "1969-06-22",
+            "gender": "F",
+            "identifier": "A112",
+            "name": "Judy Garland"
+        }
+    ]
+}

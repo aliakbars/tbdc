@@ -15,7 +15,7 @@ block content
         th Gender
         th Birthdate
     tbody
-      each patient in [{"identifier": "A110","name": "Joe Blitzstein","gender": "M","birthdate": "1969-04-11"},{"identifier": "A111","name": "John Doe","gender": "M","birthdate": "1950-11-05"},{"identifier": "A112","name": "Judy Garland","gender": "F","birthdate": "1969-06-22"}]
+      each patient in patients
         tr
           td <a href="patient.html">#{patient.identifier}</a>
           td #{patient.name}
