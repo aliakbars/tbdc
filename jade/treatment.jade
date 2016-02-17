@@ -10,21 +10,21 @@ block patient_form
       div(class="form-group col-xs-4")
         label(for="medication[]") Medication
         select(class="form-control", name="medication[]")
-          option FDC 4 combination (HRZE)
-          option FDC 2 combination (HR)
-          option Isoniazid (H)
-          option Rifampisin (R)
-          option Pirazinamid (Z)
-          option Etambutol (E)
-          option Streptomisin (S)
-          option FDC for children (HRZ)
-          option Kanamysin (Km)
-          option Capreomysin (Cm)
-          option Levofloksasin (Lfx)
-          option Moksifloksasin (Mfx)
-          option Ethionamide (Etio)
-          option Cycloserine (Cs)
-          option Para-aminosalicyclic Acid (PAS)
+          option(value="HRZE") FDC 4 combination (HRZE)
+          option(value="HR") FDC 2 combination (HR)
+          option(value="H") Isoniazid (H)
+          option(value="R") Rifampisin (R)
+          option(value="Z") Pirazinamid (Z)
+          option(value="E") Etambutol (E)
+          option(value="S") Streptomisin (S)
+          option(value="HRZ") FDC for children (HRZ)
+          option(value="Km") Kanamysin (Km)
+          option(value="Cm") Capreomysin (Cm)
+          option(value="Lfx") Levofloksasin (Lfx)
+          option(value="Mfx") Moksifloksasin (Mfx)
+          option(value="Etio") Ethionamide (Etio)
+          option(value="Cs") Cycloserine (Cs)
+          option(value="PAS") Para-aminosalicyclic Acid (PAS)
       div(class="form-group col-xs-4")
         label(for="doses[]") Doses
         .input-group
@@ -32,12 +32,11 @@ block patient_form
           span(class="input-group-addon") mg/kg weight
       div(class="form-group col-xs-4")
         label(for="frequency[]") Frequency
+        //- n times/day
         .input-group
           select(class="form-control", name="frequency[]")
-            option Daily
-            option 3 times a week
-            option 5 times a week
-            option Others
+            - for (var i = 1; i <=7; i++)
+              option(value="#{i}") #{i} times a week
     span(class="btn btn-default btn-sm", id="add-treatment") Add another
     legend Side Effects
     div(class="checkbox")

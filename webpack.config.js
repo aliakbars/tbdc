@@ -2,7 +2,8 @@ var webpack = require('webpack');
 
 var config = {
   entry: {
-    main: './src/patientlist.jsx'
+    patients: './src/patientlist.jsx',
+    tbform: './src/tbform.jsx'
   },
 
   // Add resolve.extensions.
@@ -27,7 +28,7 @@ var config = {
 
   output: {
     path: 'dist/js',
-    filename: 'bundle.js'
+    filename: '[name].js'
   }
 };
 

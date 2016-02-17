@@ -45,19 +45,7 @@ block patient_form
         |  Others
 
     legend Diagnosis
-    div(class="form-group")
-      label(for="address") Diagnosis
-      select(class="form-control")
-        option Suspect TB
-        option Confirm positive TB
-        option Negative TB
-    div(class="form-group")
-      label(for="address") TB Patient's Status
-      select(class="form-control")
-        option New
-        option Chronic
-        option Relapse
-        option Drop out
+    #diagnosis
 
     legend Underlying Medical Condition
     div(class="checkbox")
@@ -89,8 +77,8 @@ block patient_form
     div(class="form-group")
       label(for="hiv") Is the patient infected by HIV?
       select(class="form-control", name="hiv")
-        option Yes
         option No
+        option Yes
         option Unknown
 
     legend TB Exposure
@@ -104,3 +92,6 @@ block patient_form
 
     button(type="submit", class="btn btn-primary") Submit
     a(href="patient.html", class="btn btn-default") Cancel
+
+block append scripts
+  script(src="dist/js/tbform.js")
