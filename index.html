@@ -16,7 +16,7 @@
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand">TBDeCare</a>
+          <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand"><img alt="TBDeCare" src="dist/img/logo.png" width="45"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,9 @@
             </div>
             <div class="form-group">
               <label for="birthdate">Birthdate</label>
-              <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD" required="true" class="form-control">
+              <div class="input-group">
+                <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD" required="true" class="form-control"><span class="input-group-btn"><a class="btn btn-default"><span aria-hidden="true" class="glyphicon glyphicon-calendar"></span></a></span>
+              </div>
             </div>
             <div class="form-group">
               <label for="gender">Gender</label><br>

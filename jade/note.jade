@@ -1,0 +1,14 @@
+extends patient
+
+block header
+    h1(class="page-header") Visit Note
+
+block patient_form
+    form(action="patient.html")
+        div(class="form-group")
+          label(for="height") Notes
+          .row
+            .col-md-4
+                textarea(class="form-control", rows="3", name="notes")
+        button(type="submit", class="btn btn-primary") Submit
+        a(href="patient.html", class="btn btn-default") Cancel

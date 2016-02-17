@@ -16,7 +16,7 @@
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand">TBDeCare</a>
+          <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand"><img alt="TBDeCare" src="dist/img/logo.png" width="45"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -43,11 +43,11 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Patient Dashboard</h1>
-          <h2>Joe Blitzstein<span class="pull-right">Patient ID: A110</span></h2>
+          <h2><a href="patient.html">Joe Blitzstein</a><span class="pull-right">Patient ID: A110</span></h2>
           <p>Male, 46 year(s) - 1969-04-11</p>
           <hr>
           <div class="row">
-            <div class="col-sm-5">
+            <div class="col-md-5">
               <div class="panel panel-primary">
                 <div class="panel-heading">
                   <h3 class="panel-title"><i class="fa fa-stethoscope"></i> Diagnoses</h3>
@@ -96,7 +96,7 @@
                       <td>22.Jan.2016</td>
                     </tr>
                     <tr>
-                      <td><a href="#">Microscopic AFB</a></td>
+                      <td><a href="labresult.html">Microscopic AFB</a></td>
                       <td>TB negative</td>
                       <td>15.Jan.2016</td>
                     </tr>
@@ -104,13 +104,36 @@
                 </table>
               </div>
             </div>
-            <div class="col-sm-5">
+            <div class="col-md-5">
               <div class="panel panel-primary">
                 <div class="panel-heading">
                   <h3 class="panel-title"><span aria-hidden="true" class="glyphicon glyphicon-calendar"></span> Appointments</h3>
                 </div>
                 <div class="panel-body"><strong>Upcoming appointment: 14.Mar.2016</strong></div>
                 <div class="list-group"><a href="#" class="list-group-item">10.Feb.2016</a><a href="#" class="list-group-item">09.Jan.2016</a></div>
+              </div>
+              <div class="panel panel-danger">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i class="fa fa-medkit"></i> Treatment</h3>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>Dose</th>
+                      <th>Frequency</th>
+                      <th>Start date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Rifampicin (R)</td>
+                      <td>150 mg</td>
+                      <td>1 times a day</td>
+                      <td>11.Feb.2016</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
               <div class="panel panel-info">
                 <div class="panel-heading">
@@ -121,7 +144,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-2">
+            <div class="col-md-2">
               <legend>Current Visit Actions</legend>
               <ul>
                 <li><a href="#">End Visit</a></li>
@@ -132,7 +155,7 @@
               </ul>
               <legend>General Actions</legend>
               <ul>
-                <li>Schedule Appointment</li>
+                <li><a href="appointment.html">Schedule Appointment</a></li>
               </ul>
             </div>
           </div>

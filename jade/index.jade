@@ -17,7 +17,11 @@ block content
       input(type="text", class="form-control", id="name", name="name", placeholder="", required="true")
     .form-group
       label(for="birthdate") Birthdate
-      input(type="text", class="form-control", id="birthdate", name="birthdate", placeholder="YYYY-MM-DD", required="true")
+      .input-group
+        input(type="text", class="form-control", id="birthdate", name="birthdate", placeholder="YYYY-MM-DD", required="true")
+        span(class="input-group-btn")
+          a(class="btn btn-default")
+            span(class="glyphicon glyphicon-calendar", aria-hidden="true")
     .form-group
       label(for="gender") Gender
       br

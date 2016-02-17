@@ -4,7 +4,15 @@
             "birthdate": "1969-04-11",
             "gender": "M",
             "identifier": "A110",
-            "name": "Joe Blitzstein"
+            "name": "Joe Blitzstein",
+            "vitals": {
+                "Height": "166 cm",
+                "Weight": "72 kg",
+                "Temperature": "43°C",
+                "Pulse": "85/min",
+                "Respiratory rate": "89/min",
+                "Blood pressure": "120/80"
+            }
         },
         {
             "birthdate": "1950-11-05",

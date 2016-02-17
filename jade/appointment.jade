@@ -1,0 +1,32 @@
+extends patient
+
+block header
+    h1(class="page-header") Schedule Appointment
+
+block patient_form
+    form(action="patient.html")
+        div(class="form-group")
+          label(for="service") Service type
+          .input-group
+            input(type="text", class="form-control", id="service", name="service", placeholder="")
+        div(class="form-group")
+          label(for="height") Agenda
+          .row
+            .col-md-4
+                textarea(class="form-control", rows="3", name="agenda")
+        div(class="form-group")
+          label(for="date") Date
+          .input-group.col-md-4
+            input(type="text", class="form-control", id="date", name="date", placeholder="YYYY-MM-DD")
+            span(class="input-group-btn")
+                a(class="btn btn-default")
+                    span(class="glyphicon glyphicon-calendar", aria-hidden="true")
+        div(class="form-group")
+          label(for="time") Time
+          .input-group.col-md-4
+            input(type="text", class="form-control", id="time", name="time", placeholder="HH:MM:SS")
+            span(class="input-group-btn")
+                a(class="btn btn-default")
+                    span(class="glyphicon glyphicon-calendar", aria-hidden="true")
+        button(type="submit", class="btn btn-primary") Submit
+        a(href="patient.html", class="btn btn-default") Cancel

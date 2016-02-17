@@ -1,17 +1,16 @@
-- var vitals = {'Height': '166 cm', 'Weight': '72 kg', 'Temperature': '43°C', 'Pulse': '85/min', 'Respiratory rate': '89/min', 'Blood pressure': '120/80'};
-
 extends layout
 
 block content
   block header
     h1(class="page-header") Patient Dashboard
-  h2 Joe Blitzstein
+  h2
+    a(href="patient.html") Joe Blitzstein
     span(class="pull-right") Patient ID: A110
   p Male, 46 year(s) - 1969-04-11
   hr
   block patient_form
     .row
-      div(class="col-sm-5")
+      div(class="col-md-5")
         //- Left Panel
         div(class="panel panel-primary")
           div(class="panel-heading")
@@ -32,7 +31,7 @@ block content
           div(class="panel-body")
             strong Last updated: 10.Jan.2016
           ul(class="list-group")
-            for value, key in {'Height': '166 cm', 'Weight': '72 kg', 'Temperature': '43°C', 'Pulse': '85/min', 'Respiratory rate': '89/min', 'Blood pressure': '120/80'}
+            for value, key in patients[0].vitals
               li(class="list-group-item")
                 span(class="text-success")= key
                 span(class="pull-right")= value
@@ -60,11 +59,11 @@ block content
                 td 22.Jan.2016
               tr
                 td
-                  a(href="#") Microscopic AFB
+                  a(href="labresult.html") Microscopic AFB
                 td TB negative
                 td 15.Jan.2016
 
-      div(class="col-sm-5")
+      div(class="col-md-5")
         //- Right panel
         div(class="panel panel-primary")
           div(class="panel-heading")
@@ -77,6 +76,25 @@ block content
             a(class="list-group-item", href="#") 10.Feb.2016
             a(class="list-group-item", href="#") 09.Jan.2016
 
+        div(class="panel panel-danger")
+          div(class="panel-heading")
+            h3(class="panel-title")
+              i(class="fa fa-medkit")
+              |  Treatment
+          table(class="table")
+            thead
+              tr
+                th Item
+                th Dose
+                th Frequency
+                th Start date
+            tbody
+              tr
+                td Rifampicin (R)
+                td 150 mg
+                td 1 times a day
+                td 11.Feb.2016
+
         div(class="panel panel-info")
           div(class="panel-heading")
             h3(class="panel-title")
@@ -86,7 +104,7 @@ block content
             div(class="col-sm-12")
               |  None
 
-      div(class="col-sm-2")
+      div(class="col-md-2")
         legend Current Visit Actions
         ul
           li
@@ -101,4 +119,5 @@ block content
             a(href="treatment.html") Treatment
         legend General Actions
         ul
-          li Schedule Appointment
+          li
+            a(href="appointment.html") Schedule Appointment

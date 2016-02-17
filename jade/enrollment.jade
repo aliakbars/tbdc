@@ -6,15 +6,20 @@ block content
     legend Demographics
     div(class="form-group")
       label(for="first_name") Given Name
-      input(type="text", class="form-control", id="first_name", placeholder="")
+      input(type="text", class="form-control", id="first_name", placeholder="", required="true")
     div(class="form-group")
       label(for="last_name") Family Name
-      input(type="text", class="form-control", id="last_name", placeholder="")
+      input(type="text", class="form-control", id="last_name", placeholder="", required="true")
     div(class="form-group")
       label(for="birthdate") Birthdate
-      input(type="text", class="form-control", id="birthdate", placeholder="YYYY-MM-DD")
+      .input-group
+        input(type="text", class="form-control", id="birthdate", placeholder="YYYY-MM-DD", required="true")
+        span(class="input-group-btn")
+          a(class="btn btn-default")
+            span(class="glyphicon glyphicon-calendar", aria-hidden="true")
     div(class="form-group")
       label(for="gender") Gender
+      br
       label(class="radio-inline")
         input(type="radio", name="gender", id="inlineRadio1", value="M")
         | Male
