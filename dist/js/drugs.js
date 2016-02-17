@@ -49,148 +49,207 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
 
-	var FilteredList = React.createClass({
-	  displayName: 'FilteredList',
+	var Drug = React.createClass({
+	  displayName: 'Drug',
 
-	  filterList: function filterList(event) {
-	    var updatedList = this.state.initialPatients;
-	    updatedList = updatedList.filter(function (patient) {
-	      return patient.name.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
-	    });
-	    this.setState({ patients: updatedList });
-	  },
-	  getInitialState: function getInitialState() {
-	    return {
-	      initialPatients: [{
-	        "birthdate": "1969-04-11",
-	        "gender": "M",
-	        "identifier": "A110",
-	        "name": "Joe Blitzstein"
-	      }, {
-	        "birthdate": "1950-11-05",
-	        "gender": "M",
-	        "identifier": "A111",
-	        "name": "John Doe"
-	      }, {
-	        "birthdate": "1969-06-22",
-	        "gender": "F",
-	        "identifier": "A112",
-	        "name": "Judy Garland"
-	      }, {
-	        "birthdate": "1991-09-14",
-	        "gender": "M",
-	        "identifier": "A101",
-	        "name": "Ali Septiandri"
-	      }, {
-	        "birthdate": "1965-01-31",
-	        "gender": "F",
-	        "identifier": "B291",
-	        "name": "Dummy Data"
-	      }],
-	      patients: []
-	    };
-	  },
-	  componentWillMount: function componentWillMount() {
-	    this.setState({ patients: this.state.initialPatients });
-	  },
 	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'form',
-	        null,
+	    var options = [];
+	    for (var i = 1; i <= 7; i++) {
+	      options.push(React.createElement(
+	        'option',
+	        { key: i, value: '{i}' },
+	        i,
+	        ' times a week'
+	      ));
+	    }
+	    if (this.props.index != 0) {
+	      var deleteButton = React.createElement(
+	        'div',
+	        { className: 'form-group col-xs-1' },
+	        React.createElement(
+	          'label',
+	          null,
+	          ' '
+	        ),
 	        React.createElement(
 	          'div',
-	          { className: 'form-group' },
+	          { className: 'input-group' },
 	          React.createElement(
-	            'label',
-	            { htmlFor: 'query' },
-	            'Find patient(s)'
+	            'span',
+	            { className: 'btn btn-danger', onClick: this.props.deleteTask },
+	            'Delete'
+	          )
+	        )
+	      );
+	    } else {
+	      var deleteButton = React.createElement('div', { className: 'form-group col-xs-1' });
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'row' },
+	      React.createElement(
+	        'div',
+	        { className: 'form-group col-xs-4' },
+	        React.createElement(
+	          'label',
+	          { htmlFor: 'medication[]' },
+	          'Medication'
+	        ),
+	        React.createElement(
+	          'select',
+	          { className: 'form-control', name: 'medication[]' },
+	          React.createElement(
+	            'option',
+	            { value: 'HRZE' },
+	            'FDC 4 combination (HRZE)'
 	          ),
-	          React.createElement('input', { type: 'text', className: 'form-control', id: 'query', placeholder: 'Search by ID or name', onChange: this.filterList })
+	          React.createElement(
+	            'option',
+	            { value: 'HR' },
+	            'FDC 2 combination (HR)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'H' },
+	            'Isoniazid (H)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'R' },
+	            'Rifampisin (R)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'Z' },
+	            'Pirazinamid (Z)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'E' },
+	            'Etambutol (E)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'S' },
+	            'Streptomisin (S)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'HRZ' },
+	            'FDC for children (HRZ)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'Km' },
+	            'Kanamysin (Km)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'Cm' },
+	            'Capreomysin (Cm)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'Lfx' },
+	            'Levofloksasin (Lfx)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'Mfx' },
+	            'Moksifloksasin (Mfx)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'Etio' },
+	            'Ethionamide (Etio)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'Cs' },
+	            'Cycloserine (Cs)'
+	          ),
+	          React.createElement(
+	            'option',
+	            { value: 'PAS' },
+	            'Para-aminosalicyclic Acid (PAS)'
+	          )
 	        )
 	      ),
 	      React.createElement(
-	        'table',
-	        { className: 'table table-hover' },
+	        'div',
+	        { className: 'form-group col-xs-4' },
 	        React.createElement(
-	          'thead',
-	          null,
-	          React.createElement(
-	            'tr',
-	            null,
-	            React.createElement(
-	              'th',
-	              null,
-	              'Identifier'
-	            ),
-	            React.createElement(
-	              'th',
-	              null,
-	              'Name'
-	            ),
-	            React.createElement(
-	              'th',
-	              null,
-	              'Gender'
-	            ),
-	            React.createElement(
-	              'th',
-	              null,
-	              'Birthdate'
-	            )
-	          )
+	          'label',
+	          { htmlFor: 'doses[]' },
+	          'Doses'
 	        ),
-	        React.createElement(List, { patients: this.state.patients })
+	        React.createElement(
+	          'div',
+	          { className: 'input-group' },
+	          React.createElement('input', { type: 'text', className: 'form-control', id: '', name: 'doses[]', placeholder: '' }),
+	          React.createElement(
+	            'span',
+	            { className: 'input-group-addon' },
+	            'mg/kg weight'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'form-group col-xs-3' },
+	        React.createElement(
+	          'label',
+	          { htmlFor: 'frequency[]' },
+	          'Frequency'
+	        ),
+	        React.createElement(
+	          'select',
+	          { className: 'form-control', name: 'frequency[]' },
+	          options
+	        )
+	      ),
+	      deleteButton
+	    );
+	  }
+	});
+
+	var DrugList = React.createClass({
+	  displayName: 'DrugList',
+
+	  addNewDrug: function addNewDrug(event) {
+	    this.setState({
+	      drugs: this.state.drugs + 1
+	    });
+	  },
+	  deleteTask: function deleteTask(event) {
+	    this.setState({
+	      drugs: this.state.drugs - 1
+	    });
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      drugs: 1
+	    };
+	  },
+	  render: function render() {
+	    var drugs = [];
+	    for (var i = 0; i < this.state.drugs; i++) {
+	      drugs.push(React.createElement(Drug, { key: i, index: i, deleteTask: this.deleteTask }));
+	    }
+	    return React.createElement(
+	      'div',
+	      null,
+	      drugs,
+	      React.createElement(
+	        'span',
+	        { className: 'btn btn-default btn-sm', id: 'add-treatment', onClick: this.addNewDrug },
+	        'Add another'
 	      )
 	    );
 	  }
 	});
 
-	var List = React.createClass({
-	  displayName: 'List',
-
-	  render: function render() {
-	    var patients = this.props.patients.map(function (patient) {
-	      return React.createElement(
-	        'tr',
-	        { key: patient.identifier },
-	        React.createElement(
-	          'td',
-	          null,
-	          React.createElement(
-	            'a',
-	            { href: 'patient.html' },
-	            patient.identifier
-	          )
-	        ),
-	        React.createElement(
-	          'td',
-	          null,
-	          patient.name
-	        ),
-	        React.createElement(
-	          'td',
-	          null,
-	          patient.gender
-	        ),
-	        React.createElement(
-	          'td',
-	          null,
-	          patient.birthdate
-	        )
-	      );
-	    });
-	    return React.createElement(
-	      'tbody',
-	      null,
-	      patients
-	    );
-	  }
-	});
-
-	ReactDOM.render(React.createElement(FilteredList, null), document.getElementById('patient-list'));
+	ReactDOM.render(React.createElement(DrugList, null), document.getElementById('drugs'));
 
 /***/ },
 /* 1 */

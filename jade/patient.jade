@@ -1,12 +1,22 @@
 extends layout
 
+block sidebar
+  li
+    a(href="index.html") Overview
+  li(class="active")
+    a(href="findpatient.html") Patients
+  li
+    a(href="#") Analytics
+  li
+    a(href="#") Export
+
 block content
   block header
     h1(class="page-header") Patient Dashboard
   h2
-    a(href="patient.html") Joe Blitzstein
-    span(class="pull-right") Patient ID: A110
-  p Male, 46 year(s) - 1969-04-11
+    a(href="patient.html") #{patients[0].name}
+    span(class="pull-right") Patient ID: #{patients[0].identifier}
+  p #{patients[0].gender}, 46 year(s) - #{patients[0].birthdate}
   hr
   block patient_form
     .row
@@ -48,20 +58,12 @@ block content
                 th Result
                 th Date
             tbody
-              tr
-                td TB Culture
-                td TB positive
-                td 13.Feb.2016
-              tr
-                td
-                  a(href="#") X-Ray
-                td Pulmonary TB
-                td 22.Jan.2016
-              tr
-                td
-                  a(href="labresult.html") Microscopic AFB
-                td TB negative
-                td 15.Jan.2016
+              for test in patients[0].lab_results
+                tr
+                  td
+                    a(href="labresult.html") #{test.name}
+                  td #{test.result}
+                  td #{test.date}
 
       div(class="col-md-5")
         //- Right panel

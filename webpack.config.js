@@ -3,7 +3,8 @@ var webpack = require('webpack');
 var config = {
   entry: {
     patients: './src/patientlist.jsx',
-    tbform: './src/tbform.jsx'
+    tbform: './src/tbform.jsx',
+    drugs: './src/drugs.jsx'
   },
 
   // Add resolve.extensions.

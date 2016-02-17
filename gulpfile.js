@@ -19,7 +19,7 @@ gulp.task('webpack', function(done) {
         if (err) {
           gutil.log('Error', err);
         } else {
-          gutil.log(stats.toString());
+          // gutil.log(stats.toString());
         }
         done();
     });

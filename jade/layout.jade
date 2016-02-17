@@ -41,14 +41,15 @@ html
       div(class="row")
         div(class="col-sm-3 col-md-2 sidebar")
           ul(class="nav nav-sidebar")
-            li(class="active")
-              a(href="index.html") Overview
-            li
-              a(href="findpatient.html") Patients
-            li
-              a(href="#") Analytics
-            li
-              a(href="#") Export
+            block sidebar
+              li(class="active")
+                a(href="index.html") Overview
+              li
+                a(href="findpatient.html") Patients
+              li
+                a(href="#") Analytics
+              li
+                a(href="#") Export
         div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main")
           block content
 

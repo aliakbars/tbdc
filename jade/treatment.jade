@@ -6,38 +6,7 @@ block header
 block patient_form
   form(action="patient.html")
     legend Treatment
-    .row#drugs
-      div(class="form-group col-xs-4")
-        label(for="medication[]") Medication
-        select(class="form-control", name="medication[]")
-          option(value="HRZE") FDC 4 combination (HRZE)
-          option(value="HR") FDC 2 combination (HR)
-          option(value="H") Isoniazid (H)
-          option(value="R") Rifampisin (R)
-          option(value="Z") Pirazinamid (Z)
-          option(value="E") Etambutol (E)
-          option(value="S") Streptomisin (S)
-          option(value="HRZ") FDC for children (HRZ)
-          option(value="Km") Kanamysin (Km)
-          option(value="Cm") Capreomysin (Cm)
-          option(value="Lfx") Levofloksasin (Lfx)
-          option(value="Mfx") Moksifloksasin (Mfx)
-          option(value="Etio") Ethionamide (Etio)
-          option(value="Cs") Cycloserine (Cs)
-          option(value="PAS") Para-aminosalicyclic Acid (PAS)
-      div(class="form-group col-xs-4")
-        label(for="doses[]") Doses
-        .input-group
-          input(type="text", class="form-control", id="", name="doses[]", placeholder="")
-          span(class="input-group-addon") mg/kg weight
-      div(class="form-group col-xs-4")
-        label(for="frequency[]") Frequency
-        //- n times/day
-        .input-group
-          select(class="form-control", name="frequency[]")
-            - for (var i = 1; i <=7; i++)
-              option(value="#{i}") #{i} times a week
-    span(class="btn btn-default btn-sm", id="add-treatment") Add another
+    #drugs
     legend Side Effects
     div(class="checkbox")
       label(for="Jaundice")
@@ -85,3 +54,6 @@ block patient_form
           option Rifampicin Resistance (RR)
     button(type="submit", class="btn btn-primary") Submit
     a(href="patient.html", class="btn btn-default") Cancel
+
+block append scripts
+  script(src="dist/js/drugs.js")

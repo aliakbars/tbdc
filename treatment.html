@@ -35,8 +35,8 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="index.html">Overview</a></li>
-            <li><a href="findpatient.html">Patients</a></li>
+            <li><a href="index.html">Overview</a></li>
+            <li class="active"><a href="findpatient.html">Patients</a></li>
             <li><a href="#">Analytics</a></li>
             <li><a href="#">Export</a></li>
           </ul>
@@ -44,52 +44,11 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Treatment</h1>
           <h2><a href="patient.html">Joe Blitzstein</a><span class="pull-right">Patient ID: A110</span></h2>
-          <p>Male, 46 year(s) - 1969-04-11</p>
+          <p>M, 46 year(s) - 1969-04-11</p>
           <hr>
           <form action="patient.html">
             <legend>Treatment</legend>
-            <div id="drugs" class="row">
-              <div class="form-group col-xs-4">
-                <label for="medication[]">Medication</label>
-                <select name="medication[]" class="form-control">
-                  <option value="HRZE">FDC 4 combination (HRZE)</option>
-                  <option value="HR">FDC 2 combination (HR)</option>
-                  <option value="H">Isoniazid (H)</option>
-                  <option value="R">Rifampisin (R)</option>
-                  <option value="Z">Pirazinamid (Z)</option>
-                  <option value="E">Etambutol (E)</option>
-                  <option value="S">Streptomisin (S)</option>
-                  <option value="HRZ">FDC for children (HRZ)</option>
-                  <option value="Km">Kanamysin (Km)</option>
-                  <option value="Cm">Capreomysin (Cm)</option>
-                  <option value="Lfx">Levofloksasin (Lfx)</option>
-                  <option value="Mfx">Moksifloksasin (Mfx)</option>
-                  <option value="Etio">Ethionamide (Etio)</option>
-                  <option value="Cs">Cycloserine (Cs)</option>
-                  <option value="PAS">Para-aminosalicyclic Acid (PAS)</option>
-                </select>
-              </div>
-              <div class="form-group col-xs-4">
-                <label for="doses[]">Doses</label>
-                <div class="input-group">
-                  <input type="text" id="" name="doses[]" placeholder="" class="form-control"><span class="input-group-addon">mg/kg weight</span>
-                </div>
-              </div>
-              <div class="form-group col-xs-4">
-                <label for="frequency[]">Frequency</label>
-                <div class="input-group">
-                  <select name="frequency[]" class="form-control">
-                    <option value="1">1 times a week</option>
-                    <option value="2">2 times a week</option>
-                    <option value="3">3 times a week</option>
-                    <option value="4">4 times a week</option>
-                    <option value="5">5 times a week</option>
-                    <option value="6">6 times a week</option>
-                    <option value="7">7 times a week</option>
-                  </select>
-                </div>
-              </div>
-            </div><span id="add-treatment" class="btn btn-default btn-sm">Add another</span>
+            <div id="drugs"></div>
             <legend>Side Effects</legend>
             <div class="checkbox">
               <label for="Jaundice"></label>
@@ -147,5 +106,6 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="dist/js/bootstrap.min.js"></script>
     <script src="dist/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="dist/js/drugs.js"></script>
   </body>
 </html>

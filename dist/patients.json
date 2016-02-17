@@ -12,7 +12,29 @@
                 "Pulse": "85/min",
                 "Respiratory rate": "89/min",
                 "Blood pressure": "120/80"
-            }
+            },
+            "lab_results": [
+                {
+                    "name": "Microscopic AFB",
+                    "result": "TB positive",
+                    "img": "dist/img/afb.jpg",
+                    "provider": "John Smith",
+                    "date": "2016-01-15 15:01:59"
+                },
+                {
+                    "name": "X-Ray",
+                    "result": "Pulmonary TB",
+                    "img": "dist/img/xray.jpg",
+                    "provider": "Michael Jackson",
+                    "date": "2016-01-22 11:29:20"
+                },
+                {
+                    "name": "TB Culture",
+                    "result": "TB positive",
+                    "provider": "John Smith",
+                    "date": "2016-02-13 13:13:13"
+                }
+            ]
         },
         {
             "birthdate": "1950-11-05",
@@ -25,6 +47,18 @@
             "gender": "F",
             "identifier": "A112",
             "name": "Judy Garland"
+        },
+        {
+            "birthdate": "1991-09-14",
+            "gender": "M",
+            "identifier": "A101",
+            "name": "Ali Septiandri"
+        },
+        {
+            "birthdate": "1965-01-31",
+            "gender": "M",
+            "identifier": "B199",
+            "name": "Dummy Data"
         }
     ]
 }

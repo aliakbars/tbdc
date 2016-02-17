@@ -30,6 +30,18 @@ var FilteredList = React.createClass({
           "gender": "F",
           "identifier": "A112",
           "name": "Judy Garland"
+        },
+        {
+            "birthdate": "1991-09-14",
+            "gender": "M",
+            "identifier": "A101",
+            "name": "Ali Septiandri"
+        },
+        {
+            "birthdate": "1965-01-31",
+            "gender": "F",
+            "identifier": "B291",
+            "name": "Dummy Data"
         }
       ],
       patients: []
