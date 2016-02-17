@@ -2,6 +2,11 @@
   "name": "tbdc",
   "version": "1.0.0",
   "author": "Garuda2045",
+  "description": "Tuberculosis detection and care system",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aliakbars/tbdc.git"
+  },
   "dependencies": {
     "jade": "~1.11.0",
     "react-dom": "~0.14.7",
