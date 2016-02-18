@@ -23,3 +23,8 @@ block patient_form
                     span(class="glyphicon glyphicon-calendar", aria-hidden="true")
         button(type="submit", class="btn btn-primary") Submit
         a(href="patient.html", class="btn btn-default") Cancel
+
+block append scripts
+  script(src="dist/js/moment.min.js")
+  script(src="dist/js/bootstrap-datetimepicker.min.js")
+  script(type="text/javascript") $(function () {$("#date").datetimepicker().data("DateTimePicker").format('YYYY-MM-DD HH:mm');})
