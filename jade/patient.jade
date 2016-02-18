@@ -27,14 +27,24 @@ block content
             h3(class="panel-title")
               i(class="fa fa-stethoscope")
               |  Diagnoses
-          div(class="panel-body") None
+          div(class="panel-body")
+            strong Last updated: 16.Feb.2016
+          ul(class="list-group")
+            li(class="list-group-item") TB Positive
+            li(class="list-group-item") MDR Negative
 
         div(class="panel panel-success")
           div(class="panel-heading")
             h3(class="panel-title")
               i(class="fa fa-heartbeat")
               |  Vitals
-          div(class="panel-body") None
+          div(class="panel-body")
+            strong Last updated: 10.Jan.2016
+          ul(class="list-group")
+            for value, key in patients[0].vitals
+              li(class="list-group-item")
+                span(class="text-success")= key
+                span(class="pull-right")= value
 
         div(class="panel panel-warning")
           div(class="panel-heading")
@@ -48,6 +58,12 @@ block content
                 th Result
                 th Date
             tbody
+              for test in patients[0].lab_results
+                tr
+                  td
+                    a(href="labresult.html") #{test.name}
+                  td #{test.result}
+                  td #{test.date}
 
       div(class="col-md-5")
         //- Right panel
@@ -56,7 +72,11 @@ block content
             h3(class="panel-title")
               span(class="glyphicon glyphicon-calendar", aria-hidden="true")
               |  Appointments
-          div(class="panel-body") None
+          div(class="panel-body")
+            strong Upcoming appointment: 14.Mar.2016
+          div(class="list-group")
+            a(class="list-group-item", href="#") 10.Feb.2016
+            a(class="list-group-item", href="#") 09.Jan.2016
 
         div(class="panel panel-danger")
           div(class="panel-heading")
@@ -71,6 +91,11 @@ block content
                 th Frequency
                 th Start date
             tbody
+              tr
+                td Rifampicin (R)
+                td 150 mg
+                td 1 times a day
+                td 11.Feb.2016
 
         div(class="panel panel-info")
           div(class="panel-heading")
