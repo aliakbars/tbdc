@@ -39,6 +39,38 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+          <h2 class="sub-header">Find Patient Record</h2>
+          <form action="findpatient.html">
+            <div class="form-group">
+              <label for="query">Find patient</label>
+              <input type="text" id="query" name="query" placeholder="Search by ID or name" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-default">Search</button>
+          </form>
+          <h2 class="sub-header">Enroll New Patient</h2>
+          <form action="enrollment.html">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="" required="true" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="birthdate">Birthdate</label>
+              <div class="input-group">
+                <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD" required="true" class="form-control"><span class="input-group-btn"><a class="btn btn-default"><span aria-hidden="true" class="glyphicon glyphicon-calendar"></span></a></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="gender">Gender</label><br>
+              <label class="radio-inline">
+                <input type="radio" name="gender" id="genderM" value="M">Male
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="gender" id="genderF" value="F">Female
+              </label>
+            </div>
+            <button type="submit" class="btn btn-default">Enroll</button>
+          </form>
         </div>
       </div>
     </div>

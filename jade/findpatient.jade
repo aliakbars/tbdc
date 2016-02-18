@@ -1,5 +1,15 @@
 extends layout
 
+block sidebar
+  li
+    a(href="home.html") Home
+  li(class="active")
+    a(href="findpatient.html") Patients
+  li
+    a(href="#") Analytics
+  li
+    a(href="#") Export
+
 block content
   h1(class="page-header") Find Patient Record
   #patient-list

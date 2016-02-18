@@ -56,14 +56,16 @@ body {
   margin-left: -20px;
 }
 .nav-sidebar > li > a {
+  color: #222;
   padding-right: 20px;
   padding-left: 20px;
 }
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #2780E3;
+  border-left: 8px solid #00ABA9;
+  padding-left: 12px;
+  background-color: #C5C5C5;
 }
 
 

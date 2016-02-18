@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h1(class="page-header") Dashboard
+
+  h2(class="sub-header") Find Patient Record
+  form(action="findpatient.html")
+    .form-group
+      label(for="query") Find patient
+      input(type="text", class="form-control", id="query", name="query", placeholder="Search by ID or name")
+    button(type="submit", class="btn btn-default") Search
+
+  h2(class="sub-header") Enroll New Patient
+  form(action="enrollment.html")
+    .form-group
+      label(for="name") Name
+      input(type="text", class="form-control", id="name", name="name", placeholder="", required="true")
+    .form-group
+      label(for="birthdate") Birthdate
+      .input-group
+        input(type="text", class="form-control", id="birthdate", name="birthdate", placeholder="YYYY-MM-DD", required="true")
+        span(class="input-group-btn")
+          a(class="btn btn-default")
+            span(class="glyphicon glyphicon-calendar", aria-hidden="true")
+    .form-group
+      label(for="gender") Gender
+      br
+      label(class="radio-inline")
+        input(type="radio", name="gender", id="genderM", value="M")
+        | Male
+      label(class="radio-inline")
+        input(type="radio", name="gender", id="genderF", value="F")
+        | Female
+    button(type="submit" class="btn btn-default") Enroll

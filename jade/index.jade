@@ -1,34 +1,33 @@
-extends layout
+//- layout.jade
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    meta(name="description", content="Tuberculosis Detection and Care System")
+    meta(name="author", content="Garuda2045")
+    block title
+      title TBDeCare
+    link(href="dist/css/bootstrap.min.css", rel="stylesheet")
+    link(href="dist/css/font-awesome.min.css", rel="stylesheet")
+    link(href="dist/css/ie10-viewport-bug-workaround.css", rel="stylesheet")
+    link(href="dist/css/signin.css", rel="stylesheet")
+  body
 
-block content
-  h1(class="page-header") Dashboard
+    div(class="container")
 
-  h2(class="sub-header") Find Patient Record
-  form(action="findpatient.html")
-    .form-group
-      label(for="query") Find patient
-      input(type="text", class="form-control", id="query", name="query", placeholder="Search by ID or name")
-    button(type="submit", class="btn btn-default") Search
+      form(class="form-signin", action="home.html")
+        img(src="dist/img/logo.png", alt="TBDeCare", width="300")
+        h2(class="form-signin-heading") Please sign in
+        label(for="username", class="sr-only") Username
+        input(type="text", id="username", class="form-control", placeholder="Username", required, autofocus)
+        label(for="inputPassword", class="sr-only") Password
+        input(type="password", id="inputPassword", class="form-control", placeholder="Password", required)
+        div(class="checkbox")
+          label
+            input(type="checkbox", value="remember-me")
+          | Remember me
+        button(class="btn btn-lg btn-primary btn-block", type="submit") Sign in
 
-  h2(class="sub-header") Enroll New Patient
-  form(action="enrollment.html")
-    .form-group
-      label(for="name") Name
-      input(type="text", class="form-control", id="name", name="name", placeholder="", required="true")
-    .form-group
-      label(for="birthdate") Birthdate
-      .input-group
-        input(type="text", class="form-control", id="birthdate", name="birthdate", placeholder="YYYY-MM-DD", required="true")
-        span(class="input-group-btn")
-          a(class="btn btn-default")
-            span(class="glyphicon glyphicon-calendar", aria-hidden="true")
-    .form-group
-      label(for="gender") Gender
-      br
-      label(class="radio-inline")
-        input(type="radio", name="gender", id="genderM", value="M")
-        | Male
-      label(class="radio-inline")
-        input(type="radio", name="gender", id="genderF", value="F")
-        | Female
-    button(type="submit" class="btn btn-default") Enroll
+    script(src="../../assets/js/ie10-viewport-bug-workaround.js")

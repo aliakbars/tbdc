@@ -10,76 +10,24 @@
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="dist/css/font-awesome.min.css" rel="stylesheet">
     <link href="dist/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-    <link href="dist/css/dashboard.css" rel="stylesheet">
+    <link href="dist/css/signin.css" rel="stylesheet">
   </head>
   <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand"><img alt="TBDeCare" src="dist/img/logo.png" width="45"></a>
+    <div class="container">
+      <form action="home.html" class="form-signin"><img src="dist/img/logo.png" alt="TBDeCare" width="300">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="username" class="sr-only">Username</label>
+        <input type="text" id="username" placeholder="Username" required autofocus class="form-control">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" placeholder="Password" required class="form-control">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me">
+          </label>Remember me
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
-          </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" placeholder="Search..." class="form-control">
-          </form>
-        </div>
-      </div>
-    </nav>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="index.html">Overview</a></li>
-            <li><a href="findpatient.html">Patients</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li>
-          </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
-          <h2 class="sub-header">Find Patient Record</h2>
-          <form action="findpatient.html">
-            <div class="form-group">
-              <label for="query">Find patient</label>
-              <input type="text" id="query" name="query" placeholder="Search by ID or name" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-default">Search</button>
-          </form>
-          <h2 class="sub-header">Enroll New Patient</h2>
-          <form action="enrollment.html">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" placeholder="" required="true" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="birthdate">Birthdate</label>
-              <div class="input-group">
-                <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD" required="true" class="form-control"><span class="input-group-btn"><a class="btn btn-default"><span aria-hidden="true" class="glyphicon glyphicon-calendar"></span></a></span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="gender">Gender</label><br>
-              <label class="radio-inline">
-                <input type="radio" name="gender" id="genderM" value="M">Male
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="gender" id="genderF" value="F">Female
-              </label>
-            </div>
-            <button type="submit" class="btn btn-default">Enroll</button>
-          </form>
-        </div>
-      </div>
+        <button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
+      </form>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="dist/js/bootstrap.min.js"></script>
-    <script src="dist/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
