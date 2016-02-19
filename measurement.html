@@ -40,54 +40,11 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Vitals</h1>
+          <h1 class="page-header">Vital Measurement - Weight</h1>
           <h2><a href="patient.html">Joe Blitzstein</a><span class="pull-right">Patient ID: A110</span></h2>
           <p>M, 46 year(s) - 1969-04-11</p>
           <hr>
-          <form action="patient.html">
-            <div class="form-group">
-              <label for="height">Height (cm)</label>
-              <div class="input-group col-md-4">
-                <input type="text" id="height" name="height" placeholder="" class="form-control"><span class="input-group-addon">cm</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="weight">Weight (kg)</label>
-              <div class="input-group col-md-4">
-                <input type="text" id="weight" name="weight" placeholder="" class="form-control"><span class="input-group-addon">kg</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="temperature">Temperature (°C)</label>
-              <div class="input-group col-md-4">
-                <input type="text" id="temperature" name="temperature" placeholder="" class="form-control"><span class="input-group-addon">°C</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="pulse">Pulse</label>
-              <div class="input-group col-md-4">
-                <input type="text" id="pulse" name="pulse" placeholder="" class="form-control"><span class="input-group-addon">/min</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="respiratory_rate">Respiratory rate</label>
-              <div class="input-group col-md-4">
-                <input type="text" id="respiratory_rate" name="respiratory_rate" placeholder="" class="form-control"><span class="input-group-addon">/min</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="blood_pressure">Blood pressure</label>
-              <div class="row">
-                <div class="col-xs-6 col-sm-3 col-md-2">
-                  <input type="text" id="blood_pressure_s" name="blood_pressure_s" placeholder="Systole" class="form-control">
-                </div>
-                <div class="col-xs-6 col-sm-3 col-md-2">
-                  <input type="text" id="blood_pressure_d" name="blood_pressure_d" placeholder="Diastole" class="form-control">
-                </div>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button><a href="patient.html" class="btn btn-default">Cancel</a>
-          </form>
+          <canvas id="myChart" width="800" height="400"></canvas>
         </div>
       </div>
     </div>
@@ -95,5 +52,7 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="dist/js/bootstrap.min.js"></script>
     <script src="dist/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script src="dist/js/vitals.js"></script>
   </body>
 </html>

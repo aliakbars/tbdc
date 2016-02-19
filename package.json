@@ -8,10 +8,11 @@
     "url": "https://github.com/aliakbars/tbdc.git"
   },
   "dependencies": {
-    "jade": "~1.11.0",
-    "react-dom": "~0.14.7",
     "babel-preset-react": "~6.5.0",
-    "react": "~0.14.7"
+    "chart.js": "^1.0.2",
+    "jade": "~1.11.0",
+    "react": "~0.14.7",
+    "react-dom": "~0.14.7"
   },
   "devDependencies": {
     "gulp": "~3.9.1",

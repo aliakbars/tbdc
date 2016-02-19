@@ -6,7 +6,7 @@ block sidebar
   li(class="active")
     a(href="findpatient.html") Patients
   li
-    a(href="#") Analytics
+    a(href="prevalence.html") Analytics
   li
     a(href="#") Export
 
@@ -39,11 +39,11 @@ block content
               i(class="fa fa-heartbeat")
               |  Vitals
           div(class="panel-body")
-            strong Last updated: 10.Jan.2016
+            strong Last updated: 10.Feb.2016
           ul(class="list-group")
             for value, key in patients[0].vitals
               li(class="list-group-item")
-                span(class="text-success")= key
+                a(href="measurement.html", class="text-success")= key
                 span(class="pull-right")= value
 
         div(class="panel panel-warning")

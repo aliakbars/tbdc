@@ -9,11 +9,12 @@ html
     meta(name="author", content="Garuda2045")
     block title
       title TBDeCare
-    link(href="dist/css/bootstrap.min.css", rel="stylesheet")
-    link(href="dist/css/bootstrap-datetimepicker.min.css", rel="stylesheet")
-    link(href="dist/css/font-awesome.min.css", rel="stylesheet")
-    link(href="dist/css/ie10-viewport-bug-workaround.css", rel="stylesheet")
-    link(href="dist/css/dashboard.css", rel="stylesheet")
+    block styles
+      link(href="dist/css/bootstrap.min.css", rel="stylesheet")
+      link(href="dist/css/bootstrap-datetimepicker.min.css", rel="stylesheet")
+      link(href="dist/css/font-awesome.min.css", rel="stylesheet")
+      link(href="dist/css/ie10-viewport-bug-workaround.css", rel="stylesheet")
+      link(href="dist/css/dashboard.css", rel="stylesheet")
   body
     nav(class="navbar navbar-default navbar-fixed-top")
       div(class="container-fluid")
@@ -47,7 +48,7 @@ html
               li
                 a(href="findpatient.html") Patients
               li
-                a(href="#") Analytics
+                a(href="prevalence.html") Analytics
               li
                 a(href="#") Export
         div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main")
