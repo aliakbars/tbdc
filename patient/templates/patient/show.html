@@ -4,9 +4,17 @@
 {% block content %}
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   <h1 class="page-header">Patient Dashboard</h1>
-  <h2><a href="patient.html">{{ patient.first_name }} {{ patient.last_name }}</a><span class="pull-right">Patient ID: {{ patient.identifier }}</span></h2>
+  <h2><a href="{% url 'patient.views.patient_show' patient.id %}">{{ patient.first_name }} {{ patient.last_name }}</a><span class="pull-right">Patient ID: {{ patient.identifier }}</span></h2>
   <p>{{ patient.gender }}, {{ patient.age }} yo - {{ patient.birthdate }}</p>
   <hr>
+  {% block body %}
+  {% if messages %}
+    <div class="alert alert-success">
+        {% for message in messages %}
+        <i class="fa fa-check"></i> <strong>Success!</strong> {{ message }}
+        {% endfor %}
+    </div>
+  {% endif %}
   <div class="row">
     <div class="col-md-5">
       <div class="panel panel-primary">
@@ -46,21 +54,13 @@
             </tr>
           </thead>
           <tbody>
+            {% for lab_result in lab_results %}
             <tr>
-              <td><a href="labresult.html">Microscopic AFB</a></td>
-              <td>TB positive</td>
-              <td>2016-01-15 15:01:59</td>
+              <td><a href="labresult.html">{{ lab_result.test_name }}</a></td>
+              <td>{{ lab_result.result }}</td>
+              <td>{{ lab_result.date_created }}</td>
             </tr>
-            <tr>
-              <td><a href="labresult.html">X-Ray</a></td>
-              <td>Pulmonary TB</td>
-              <td>2016-01-22 11:29:20</td>
-            </tr>
-            <tr>
-              <td><a href="labresult.html">TB Culture</a></td>
-              <td>TB positive</td>
-              <td>2016-02-13 13:13:13</td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
@@ -70,8 +70,12 @@
         <div class="panel-heading">
           <h3 class="panel-title"><span aria-hidden="true" class="glyphicon glyphicon-calendar"></span> Appointments</h3>
         </div>
-        <div class="panel-body"><strong>Upcoming appointment: 14.Mar.2016</strong></div>
-        <div class="list-group"><a href="#" class="list-group-item">10.Feb.2016</a><a href="#" class="list-group-item">09.Jan.2016</a></div>
+        <div class="panel-body"><strong>Upcoming appointment: {{ upcoming_appt.date }}</strong></div>
+        <div class="list-group">
+            {% for appointment in appointments %}
+            <a href="#" class="list-group-item">{{ appointment.date }}</a>
+            {% endfor %}
+        </div>
       </div>
       <div class="panel panel-danger">
         <div class="panel-heading">
@@ -87,12 +91,14 @@
             </tr>
           </thead>
           <tbody>
+            {% for treatment in treatments %}
             <tr>
-              <td>Rifampicin (R)</td>
-              <td>150 mg</td>
-              <td>7 times a week</td>
-              <td>11.Feb.2016</td>
+              <td>{{ treatment.get_medication_display }}</td>
+              <td>{{ treatment.dosage }} mg</td>
+              <td>{{ treatment.freq_day }}/day | {{ treatment.freq_week }}/week</td>
+              <td>{{ treatment.start_date }}</td>
             </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
@@ -116,10 +122,10 @@
       </ul>
       <legend>General Actions</legend>
       <ul>
-        <li><a href="appointment.html">Schedule Appointment</a></li>
+        <li><a href="{% url 'patient.views.appointment_create' patient.id %}">Schedule Appointment</a></li>
       </ul>
     </div>
   </div>
-</div>
+  {% endblock %}
 </div>
 {% endblock %}

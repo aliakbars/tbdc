@@ -51,7 +51,7 @@ class LabResult(models.Model):
     img = models.CharField(max_length=255)
     result = models.CharField(max_length=127)
     creator = models.ForeignKey(User)
-    date_created = models.DateTimeField()
+    date_created = models.DateTimeField(auto_now_add=True)
 
 class Treatment(models.Model):
     DRUG_CHOICES = (
@@ -85,6 +85,6 @@ class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     service_type = models.CharField(max_length=255)
     agenda = models.TextField()
-    date = models.DateField()
+    date = models.DateTimeField()
     creator = models.ForeignKey(User)
     date_created = models.DateTimeField(auto_now_add=True)

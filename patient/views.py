@@ -4,12 +4,14 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from patient.models import *
 from datetime import datetime, date
 import json
+import subprocess
+import os
 
 # Create your views here.
 def index(request):
@@ -25,7 +27,39 @@ def patient_index(request):
 def patient_show(request, patient_id):
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)
-    return render(request, 'patient/show.html', {'patient': patient})
+    data = {
+        'patient': patient,
+        'lab_results': patient.labresult_set.all(),
+        'treatments': patient.treatment_set.all(),
+        'appointments': patient.appointment_set.filter(date__lt=date.today()),
+        'upcoming_appt': patient.appointment_set.filter(date__gte=date.today()).order_by('date')[0]
+    }
+    return render(request, 'patient/show.html', data)
+
+def appointment_create(request, patient_id):
+    if request.method == 'POST':
+        fields = ['service_type', 'agenda', 'date']
+        empty_field = []
+        for field in fields:
+            if not request.POST.get(field, ''):
+                empty_field.append(field)
+        if empty_field:
+            messages.error(request, 'Please fill out these fields: %s' % ', '.join(empty_field))
+            print 'Please fill out these fields: %s' % ', '.join(empty_field)
+        else:
+            user = User.objects.get(id=1)
+            patient = Patient.objects.get(id=patient_id)
+            appointment = patient.appointment_set.create(
+                service_type=request.POST['service_type'],
+                agenda=request.POST['agenda'],
+                date=request.POST['date'],
+                creator=user
+            )
+            messages.success(request, 'Appointment scheduled.')
+            return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
+    patient = Patient.objects.get(id=patient_id)
+    patient.age = calculate_age(patient.birthdate)
+    return render(request, 'appointment/create.html', {'patient': patient})
 
 def handle_api(request, obj):
     response_data = {}
@@ -54,6 +88,16 @@ def appointment_get(request):
 def treatment_get(request):
     return handle_api(request, Treatment)
 
+def lab_result_afb_store(creator, filename):
+    parameters = filename.split('_')
+    identifier = parameters[-1].split('.')[0]
+    patient = Patient.objects.get(identifier=identifier)
+    if result == 0:
+        result = 'MTB Negative'
+    else:
+        result = 'MTB Positive (%d)' % parameters[0]
+    lab_result = LabResult(patient=patient, test_name='Microscopic AFB', img=filename, result=result, creator=creator)
+
 def lab_result_create(request):
     return render(request, 'labresult/index.html')
 
@@ -79,7 +123,11 @@ def lab_result_store(request):
                 extension = filename.split('.')[-1]
                 response_data['status'] = 'success'
                 response_data['message'] = 'Photo uploaded!'
-                # TODO Update database
+                # subprocess.Popen('') # Input script here
+                # filenames = os.listdir(settings.MEDIA_ROOT + 'result')
+                # for f in filenames:
+                #     # Process file here
+                #     break
             else:
                 response_data['status'] = 'error'
                 response_data['message'] = 'Invalid username or password!'
