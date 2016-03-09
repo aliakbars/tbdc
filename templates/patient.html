@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tuberculosis Detection and Care System">
+    <meta name="author" content="Garuda2045">
+    <title>TBDeCare</title>
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="dist/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="dist/css/font-awesome.min.css" rel="stylesheet">
+    <link href="dist/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="dist/css/dashboard.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand"><img alt="TBDeCare" src="dist/img/logo.png" width="45"></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Hello,<span style="color: #A4C400"> Admin</span></a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="home.html">Home</a></li>
+            <li class="active"><a href="findpatient.html">Patients</a></li>
+            <li><a href="prevalence.html">Analytics</a></li>
+            <li><a href="#">Export</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Patient Dashboard</h1>
+          <h2><a href="patient.html">Joe Blitzstein</a><span class="pull-right">Patient ID: A110</span></h2>
+          <p>M, 46 year(s) - 1969-04-11</p>
+          <hr>
+          <div class="row">
+            <div class="col-md-5">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i class="fa fa-stethoscope"></i> Diagnoses</h3>
+                </div>
+                <div class="panel-body"><strong>Last updated: 16.Feb.2016</strong></div>
+                <ul class="list-group">
+                  <li class="list-group-item">TB Positive</li>
+                  <li class="list-group-item">MDR Negative</li>
+                </ul>
+              </div>
+              <div class="panel panel-success">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i class="fa fa-heartbeat"></i> Vitals</h3>
+                </div>
+                <div class="panel-body"><strong>Last updated: 10.Feb.2016</strong></div>
+                <ul class="list-group">
+                  <li class="list-group-item"><a href="measurement.html" class="text-success">Height</a><span class="pull-right">166 cm</span></li>
+                  <li class="list-group-item"><a href="measurement.html" class="text-success">Weight</a><span class="pull-right">72 kg</span></li>
+                  <li class="list-group-item"><a href="measurement.html" class="text-success">Temperature</a><span class="pull-right">43°C</span></li>
+                  <li class="list-group-item"><a href="measurement.html" class="text-success">Pulse</a><span class="pull-right">85/min</span></li>
+                  <li class="list-group-item"><a href="measurement.html" class="text-success">Respiratory rate</a><span class="pull-right">89/min</span></li>
+                  <li class="list-group-item"><a href="measurement.html" class="text-success">Blood pressure</a><span class="pull-right">120/80</span></li>
+                </ul>
+              </div>
+              <div class="panel panel-warning">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i class="fa fa-file-text"></i> Lab Result</h3>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Test</th>
+                      <th>Result</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><a href="labresult.html">Microscopic AFB</a></td>
+                      <td>TB positive</td>
+                      <td>2016-01-15 15:01:59</td>
+                    </tr>
+                    <tr>
+                      <td><a href="labresult.html">X-Ray</a></td>
+                      <td>Pulmonary TB</td>
+                      <td>2016-01-22 11:29:20</td>
+                    </tr>
+                    <tr>
+                      <td><a href="labresult.html">TB Culture</a></td>
+                      <td>TB positive</td>
+                      <td>2016-02-13 13:13:13</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><span aria-hidden="true" class="glyphicon glyphicon-calendar"></span> Appointments</h3>
+                </div>
+                <div class="panel-body"><strong>Upcoming appointment: 14.Mar.2016</strong></div>
+                <div class="list-group"><a href="#" class="list-group-item">10.Feb.2016</a><a href="#" class="list-group-item">09.Jan.2016</a></div>
+              </div>
+              <div class="panel panel-danger">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i class="fa fa-medkit"></i> Treatment</h3>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>Dose</th>
+                      <th>Frequency</th>
+                      <th>Start date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Rifampicin (R)</td>
+                      <td>150 mg</td>
+                      <td>7 times a week</td>
+                      <td>11.Feb.2016</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><span aria-hidden="true" class="glyphicon glyphicon-pencil"></span> Notes</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="col-sm-12"> None</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <legend>Current Visit Actions</legend>
+              <ul>
+                <li><a href="#">End Visit</a></li>
+                <li><a href="screening.html">TB Form</a></li>
+                <li><a href="note.html">Visit Notes</a></li>
+                <li><a href="vitals.html">Capture Vitals</a></li>
+                <li><a href="treatment.html">Treatment</a></li>
+              </ul>
+              <legend>General Actions</legend>
+              <ul>
+                <li><a href="appointment.html">Schedule Appointment</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="dist/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+[client]
+database = tbdc
+user = root
+password = root
+default-character-set = utf8
