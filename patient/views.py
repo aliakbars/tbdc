@@ -257,7 +257,7 @@ def lab_result_afb_store(creator, filename):
     if result == 0:
         result = 'MTB Negative'
     else:
-        result = 'MTB Positive (%d)' % parameters[0]
+        result = 'MTB Positive (%d)' % int(parameters[0])
     lab_result = LabResult(patient=patient, test_name='Microscopic AFB', img=filename, result=result, creator=creator)
     lab_result.save()
 
@@ -286,6 +286,11 @@ def lab_result_store(request):
                 extension = filename.split('.')[-1]
                 response_data['status'] = 'success'
                 response_data['message'] = 'Photo uploaded!'
+                # subprocess.Popen('') # Input script here
+                from random import randint
+                from shutil import copyfile
+                bacillus = randint(0,5)
+                copyfile(settings.MEDIA_ROOT + filename, settings.MEDIA_ROOT + 'result/' + str(bacillus) + '_' + filename)
                 # subprocess.Popen('') # Input script here
                 filenames = os.listdir(settings.MEDIA_ROOT + 'result')
                 for f in filenames:
