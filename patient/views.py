@@ -24,15 +24,54 @@ def calculate_age(born):
 def patient_index(request):
     return render(request, 'patient/index.html')
 
+def patient_create(request):
+    if request.method == 'POST':
+        fields = ['first_name', 'last_name', 'birthdate', 'address', 'city', 'province', 'country', 'phone']
+        empty_field = []
+        for field in fields:
+            if not request.POST.get(field, ''):
+                empty_field.append(field)
+        if empty_field:
+            messages.error(request, 'Please fill out these fields: %s' % ', '.join(empty_field))
+        else:
+            user = User.objects.get(id=1)
+            patient = Patient.objects.create(first_name=request.POST['first_name'],
+                last_name=request.POST['last_name'],
+                birthdate=request.POST['birthdate'],
+                address=request.POST['address'],
+                city=request.POST['city'],
+                province=request.POST['province'],
+                country=request.POST['country'],
+                phone=request.POST['phone'])
+            patient.save()
+            return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
+    data = {}
+    name = request.GET.get('name', '').split(' ')
+    if name:
+        data['first_name'] = ' '.join(name[:-1])
+        data['last_name'] = name[-1]
+    data['birthdate'] = request.GET.get('birthdate', '')
+    data['gender'] = request.GET.get('gender', '')
+    return render(request, 'patient/create.html', {'data': data})
+
 def patient_show(request, patient_id):
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)
+    visit = patient.visit_set.order_by('date_created')
+    if visit:
+        vitals = visit[-1].vitals
+    else:
+        vitals = None
+    upcoming = patient.appointment_set.filter(date__gte=date.today()).order_by('date')
+    if upcoming:
+        upcoming = upcoming[0]
     data = {
         'patient': patient,
         'lab_results': patient.labresult_set.all(),
         'treatments': patient.treatment_set.all(),
         'appointments': patient.appointment_set.filter(date__lt=date.today()),
-        'upcoming_appt': patient.appointment_set.filter(date__gte=date.today()).order_by('date')[0]
+        'vitals': vitals,
+        'upcoming_appt': upcoming
     }
     return render(request, 'patient/show.html', data)
 
@@ -90,6 +129,7 @@ def treatment_get(request):
 
 def lab_result_afb_store(creator, filename):
     parameters = filename.split('_')
+    result = int(parameters[0])
     identifier = parameters[-1].split('.')[0]
     patient = Patient.objects.get(identifier=identifier)
     if result == 0:
@@ -97,6 +137,7 @@ def lab_result_afb_store(creator, filename):
     else:
         result = 'MTB Positive (%d)' % parameters[0]
     lab_result = LabResult(patient=patient, test_name='Microscopic AFB', img=filename, result=result, creator=creator)
+    lab_result.save()
 
 def lab_result_create(request):
     return render(request, 'labresult/index.html')
@@ -124,10 +165,8 @@ def lab_result_store(request):
                 response_data['status'] = 'success'
                 response_data['message'] = 'Photo uploaded!'
                 # subprocess.Popen('') # Input script here
-                # filenames = os.listdir(settings.MEDIA_ROOT + 'result')
-                # for f in filenames:
-                #     # Process file here
-                #     break
+                for f in filenames:
+                    lab_result_afb_store(user, settings.MEDIA_ROOT + 'result')
             else:
                 response_data['status'] = 'error'
                 response_data['message'] = 'Invalid username or password!'
@@ -137,11 +176,18 @@ def lab_result_store(request):
     response_data['message'] = 'Method not allowed!'
     return HttpResponse(json.dumps(response_data), content_type='application/json')
 
+def lab_result_show(request, patient_id, lab_result_id):
+    patient = Patient.objects.get(id=patient_id)
+    patient.age = calculate_age(patient.birthdate)
+    lab_result = LabResult.objects.get(id=lab_result_id)
+    user = lab_result.creator
+    return render(request, 'labresult/show.html', {'patient': patient, 'lab_result': lab_result, 'user': user})
+
 def handle_upload(request, field_name):
     today = datetime.today()
     extension = request.FILES[field_name].name.split('.')[-1]
-    filename = settings.MEDIA_ROOT + today.strftime("%y%m%d_%H%M%S") + '_' + request.POST.get('patient_id','') + '.' + extension
-    with open(filename, 'wb+') as dest:
+    filename = today.strftime("%y%m%d_%H%M%S") + '_' + request.POST.get('patient_id','') + '.' + extension
+    with open(settings.MEDIA_ROOT + filename, 'wb+') as dest:
         for chunk in request.FILES[field_name].chunks():
             dest.write(chunk)
         return filename

@@ -1,0 +1,16 @@
+{% extends 'patient/show.html' %}
+{% load staticfiles %}
+
+{% block pageheader %}
+<h1 class="page-header">Lab Result - {{ lab_result.test_name }}</h1>
+{% endblock %}
+
+{% block body %}
+<h4>Image</h4><img src="/media/result/{{ lab_result.img }}" width="300" class="img-thumbnail">
+<h4>Result</h4>
+<p id="result">{{ lab_result.result }}</p>
+<h4>Date</h4>
+<p id="date_created">{{ lab_result.date_created }}</p>
+<h4>Analyst</h4>
+<p id="creator">{{ user.first_name }} {{ user.last_name }}</p>
+{% endblock %}

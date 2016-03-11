@@ -3,7 +3,9 @@
 
 {% block content %}
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  {% block pageheader %}
   <h1 class="page-header">Patient Dashboard</h1>
+  {% endblock %}
   <h2><a href="{% url 'patient.views.patient_show' patient.id %}">{{ patient.first_name }} {{ patient.last_name }}</a><span class="pull-right">Patient ID: {{ patient.identifier }}</span></h2>
   <p>{{ patient.gender }}, {{ patient.age }} yo - {{ patient.birthdate }}</p>
   <hr>
@@ -31,14 +33,14 @@
         <div class="panel-heading">
           <h3 class="panel-title"><i class="fa fa-heartbeat"></i> Vitals</h3>
         </div>
-        <div class="panel-body"><strong>Last updated: 10.Feb.2016</strong></div>
+        <div class="panel-body"><strong>Last updated: {{ vitals.date_created }}</strong></div>
         <ul class="list-group">
-          <li class="list-group-item"><a href="measurement.html" class="text-success">Height</a><span class="pull-right">166 cm</span></li>
-          <li class="list-group-item"><a href="measurement.html" class="text-success">Weight</a><span class="pull-right">72 kg</span></li>
-          <li class="list-group-item"><a href="measurement.html" class="text-success">Temperature</a><span class="pull-right">43°C</span></li>
-          <li class="list-group-item"><a href="measurement.html" class="text-success">Pulse</a><span class="pull-right">85/min</span></li>
-          <li class="list-group-item"><a href="measurement.html" class="text-success">Respiratory rate</a><span class="pull-right">89/min</span></li>
-          <li class="list-group-item"><a href="measurement.html" class="text-success">Blood pressure</a><span class="pull-right">120/80</span></li>
+          <li class="list-group-item"><a href="measurement.html" class="text-success">Height</a><span class="pull-right">{{ vitals.height }} cm</span></li>
+          <li class="list-group-item"><a href="measurement.html" class="text-success">Weight</a><span class="pull-right">{{ vitals.weight }} kg</span></li>
+          <li class="list-group-item"><a href="measurement.html" class="text-success">Temperature</a><span class="pull-right">{{ vitals.temperature }}°C</span></li>
+          <li class="list-group-item"><a href="measurement.html" class="text-success">Pulse</a><span class="pull-right">{{ vitals.pulse }}/min</span></li>
+          <li class="list-group-item"><a href="measurement.html" class="text-success">Respiratory rate</a><span class="pull-right">{{ vitals.respiratory_rate }}/min</span></li>
+          <li class="list-group-item"><a href="measurement.html" class="text-success">Blood pressure</a><span class="pull-right">{{ vitals.bp_systole }}/{{ vitals.bp_diastole }}</span></li>
         </ul>
       </div>
       <div class="panel panel-warning">
@@ -56,7 +58,7 @@
           <tbody>
             {% for lab_result in lab_results %}
             <tr>
-              <td><a href="labresult.html">{{ lab_result.test_name }}</a></td>
+              <td><a href="{% url 'patient.views.lab_result_show' patient.id lab_result.id %}">{{ lab_result.test_name }}</a></td>
               <td>{{ lab_result.result }}</td>
               <td>{{ lab_result.date_created }}</td>
             </tr>

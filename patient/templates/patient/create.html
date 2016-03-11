@@ -1,0 +1,74 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">Enroll New Patient</h1>
+    {% if messages %}
+    <div class="alert alert-danger">
+        {% for message in messages %}
+        <i class="fa fa-exclamation-triangle"></i> <strong>Oops!</strong> {{ message }}
+        {% endfor %}
+    </div>
+  {% endif %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <legend>Demographics</legend>
+        <div class="form-group">
+          <label for="first_name">Given Name</label>
+          <input type="text" id="first_name" name="first_name" placeholder="" required="true" value="{{ data.first_name }}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="last_name">Family Name</label>
+          <input type="text" id="last_name" name="last_name" placeholder="" required="true" value="{{ data.last_name }}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="birthdate">Birthdate</label>
+          <div class="input-group">
+            <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD" required="true" value="{{ data.birthdate }}" class="form-control"><span class="input-group-btn"><a class="btn btn-default"><span aria-hidden="true" class="glyphicon glyphicon-calendar"></span></a></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label><br>
+          <label class="radio-inline">
+            <input type="radio" name="gender" id="inlineRadio1" value="M" {% if data.gender == 'M' %}checked{% endif %}>Male
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="gender" id="inlineRadio2" value="F" {% if data.gender == 'F' %}checked{% endif %}>Female
+          </label>
+        </div>
+        <legend>Contact Info</legend>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" id="address" name="address" placeholder="" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="address2">Address 2</label>
+          <input type="text" id="address2" name="address2" placeholder="" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="city">City/Village</label>
+          <input type="text" id="city" name="city" placeholder="" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="province">State/Province</label>
+          <input type="text" id="province" name="province" placeholder="" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input type="text" id="country" name="country" placeholder="" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="phone" id="phone" name="phone" placeholder="" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button><a href="{% url 'index' %}" class="btn btn-default">Cancel</a>
+    </form>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/moment.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+<script type="text/javascript">$(function () {$("#birthdate").datetimepicker().data("DateTimePicker").format('YYYY-MM-DD');})</script>
+{% endblock %}
