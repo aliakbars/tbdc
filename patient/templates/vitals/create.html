@@ -1,0 +1,67 @@
+{% extends 'patient/show.html' %}
+{% load staticfiles %}
+
+{% block pageheader %}
+<h1 class="page-header">Capture Vitals</h1>
+{% endblock %}
+
+{% block body %}
+{% if messages %}
+<div class="alert alert-danger">
+    {% for message in messages %}
+    <i class="fa fa-exclamation-triangle"></i> <strong>Oops!</strong> {{ message }}
+    {% endfor %}
+</div>
+{% endif %}
+<form action="" method="post">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="height">Height (cm)</label>
+    <div class="input-group col-md-4">
+      <input type="text" id="height" name="height" placeholder="" class="form-control"><span class="input-group-addon">cm</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="weight">Weight (kg)</label>
+    <div class="input-group col-md-4">
+      <input type="text" id="weight" name="weight" placeholder="" class="form-control"><span class="input-group-addon">kg</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="temperature">Temperature (°C)</label>
+    <div class="input-group col-md-4">
+      <input type="text" id="temperature" name="temperature" placeholder="" class="form-control"><span class="input-group-addon">°C</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="pulse">Pulse</label>
+    <div class="input-group col-md-4">
+      <input type="text" id="pulse" name="pulse" placeholder="" class="form-control"><span class="input-group-addon">/min</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="respiratory_rate">Respiratory rate</label>
+    <div class="input-group col-md-4">
+      <input type="text" id="respiratory_rate" name="respiratory_rate" placeholder="" class="form-control"><span class="input-group-addon">/min</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="blood_pressure">Blood pressure</label>
+    <div class="row">
+      <div class="col-xs-6 col-sm-3 col-md-2">
+        <input type="text" id="bp_systole" name="bp_systole" placeholder="Systole" class="form-control">
+      </div>
+      <div class="col-xs-6 col-sm-3 col-md-2">
+        <input type="text" id="bp_diastole" name="bp_diastole" placeholder="Diastole" class="form-control">
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button><a href="{% url 'patient.views.patient_show' patient.id %}" class="btn btn-default">Cancel</a>
+</form>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/moment.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+<script type="text/javascript">$(function () {$("#date").datetimepicker().data("DateTimePicker").format('YYYY-MM-DD HH:mm');})</script>
+{% endblock %}

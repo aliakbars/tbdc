@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
@@ -13,6 +14,9 @@ import json
 import subprocess
 import os
 
+def generateID():
+    return ''.join(random.sample(set(string.letters.upper()), 3) + random.sample(string.digits, 5))
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -21,12 +25,31 @@ def calculate_age(born):
     today = date.today()
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
+def patient_get(request):
+    response_data = {}
+    if request.method == 'GET':
+        if not request.GET.get('query', ''):
+            response_data['status'] = 'success'
+            response_data['message'] = Patient.objects.all()
+        else:
+            query = request.GET['query']
+            data = Patient.objects.filter(
+                Q(first_name__icontains=query) | Q(last_name__icontains=query) | Q(identifier__icontains=query)
+            )
+            response_data['status'] = 'success'
+            response_data['message'] = list(data.values())
+
+        return HttpResponse(json.dumps(response_data, cls=DjangoJSONEncoder), content_type='application/json')
+    response_data['status'] = 'error'
+    response_data['message'] = 'Method not allowed!'
+    return HttpResponse(json.dumps(response_data), content_type='application/json')
+
 def patient_index(request):
-    return render(request, 'patient/index.html')
+    return render(request, 'patient/index.html', {'query': request.GET.get('query', '')})
 
 def patient_create(request):
     if request.method == 'POST':
-        fields = ['first_name', 'last_name', 'birthdate', 'address', 'city', 'province', 'country', 'phone']
+        fields = ['first_name', 'last_name', 'birthdate', 'address', 'city', 'province', 'country', 'phone_number']
         empty_field = []
         for field in fields:
             if not request.POST.get(field, ''):
@@ -34,15 +57,20 @@ def patient_create(request):
         if empty_field:
             messages.error(request, 'Please fill out these fields: %s' % ', '.join(empty_field))
         else:
-            user = User.objects.get(id=1)
-            patient = Patient.objects.create(first_name=request.POST['first_name'],
+            identifier = generateID()
+            user = User.objects.create_user(identifier, password=identifier,
+                first_name=request.POST['first_name'], last_name=request.POST['last_name'])
+            patient = user.patient_set.create(
+                identifier=identifier,
+                first_name=request.POST['first_name'],
                 last_name=request.POST['last_name'],
                 birthdate=request.POST['birthdate'],
                 address=request.POST['address'],
                 city=request.POST['city'],
                 province=request.POST['province'],
                 country=request.POST['country'],
-                phone=request.POST['phone'])
+                phone_number=request.POST['phone_number']
+            )
             patient.save()
             return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
     data = {}
@@ -57,11 +85,14 @@ def patient_create(request):
 def patient_show(request, patient_id):
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)
-    visit = patient.visit_set.order_by('date_created')
-    if visit:
-        vitals = visit[-1].vitals
+    visits = patient.visit_set.order_by('-date_created')
+    if visits:
+        last_visit = visits[0]
     else:
-        vitals = None
+        last_visit = None
+    vitals = patient.vitals_set.order_by('-date_created')
+    if vitals:
+        vitals = vitals[0]
     upcoming = patient.appointment_set.filter(date__gte=date.today()).order_by('date')
     if upcoming:
         upcoming = upcoming[0]
@@ -70,10 +101,70 @@ def patient_show(request, patient_id):
         'lab_results': patient.labresult_set.all(),
         'treatments': patient.treatment_set.all(),
         'appointments': patient.appointment_set.filter(date__lt=date.today()),
+        'visits': visits,
+        'last_visit': last_visit,
         'vitals': vitals,
         'upcoming_appt': upcoming
     }
     return render(request, 'patient/show.html', data)
+
+def visit_create(request, patient_id):
+    if request.method == 'POST':
+        fields = ['diagnoses', 'notes']
+        empty_field = []
+        for field in fields:
+            if not request.POST.get(field, ''):
+                empty_field.append(field)
+        if empty_field:
+            messages.error(request, 'Please fill out these fields: %s' % ', '.join(empty_field))
+        else:
+            user = User.objects.get(id=1)
+            patient = Patient.objects.get(id=patient_id)
+            visit = patient.visit_set.create(
+                diagnoses=request.POST['diagnoses'],
+                notes=request.POST['notes'],
+                creator=user
+            )
+            messages.success(request, 'Visit notes recorded.')
+            return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
+    patient = Patient.objects.get(id=patient_id)
+    patient.age = calculate_age(patient.birthdate)
+    return render(request, 'visit/create.html', {'patient': patient})
+
+def vitals_create(request, patient_id):
+    if request.method == 'POST':
+        fields = ['height', 'weight', 'temperature', 'pulse', 'respiratory_rate', 'bp_systole', 'bp_diastole']
+        empty_field = []
+        for field in fields:
+            if not request.POST.get(field, ''):
+                empty_field.append(field)
+        if empty_field:
+            messages.error(request, 'Please fill out these fields: %s' % ', '.join(empty_field))
+        else:
+            user = User.objects.get(id=1)
+            patient = Patient.objects.get(id=patient_id)
+            vitals = patient.vitals_set.create(
+                height=request.POST['height'],
+                weight=request.POST['weight'],
+                temperature=request.POST['temperature'],
+                pulse=request.POST['pulse'],
+                respiratory_rate=request.POST['respiratory_rate'],
+                bp_systole=request.POST['bp_systole'],
+                bp_diastole=request.POST['bp_diastole'],
+                creator=user
+            )
+            messages.success(request, 'Vitals recorded.')
+            return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
+    patient = Patient.objects.get(id=patient_id)
+    patient.age = calculate_age(patient.birthdate)
+    return render(request, 'vitals/create.html', {'patient': patient})
+
+def vitals_trend(request, patient_id, column):
+    patient = Patient.objects.get(id=patient_id)
+    patient.age = calculate_age(patient.birthdate)
+    vitals = patient.vitals_set.values(column)
+    column_name = column.replace('_', ' ').title()
+    return render(request, 'vitals/trend.html', {'patient': patient, 'vitals': vitals, 'column_name': column_name})
 
 def appointment_create(request, patient_id):
     if request.method == 'POST':
@@ -124,6 +215,37 @@ def handle_api(request, obj):
 def appointment_get(request):
     return handle_api(request, Appointment)
 
+def treatment_create(request, patient_id):
+    if request.method == 'POST':
+        fields = ['height', 'weight', 'temperature', 'pulse', 'respiratory_rate', 'bp_systole', 'bp_diastole']
+        empty_field = []
+        for field in fields:
+            if not request.POST.get(field, ''):
+                empty_field.append(field)
+        if empty_field:
+            messages.error(request, 'Please fill out these fields: %s' % ', '.join(empty_field))
+        else:
+            user = User.objects.get(id=1)
+            patient = Patient.objects.get(id=patient_id)
+            vitals = patient.vitals_set.create(
+                height=request.POST['height'],
+                weight=request.POST['weight'],
+                temperature=request.POST['temperature'],
+                pulse=request.POST['pulse'],
+                respiratory_rate=request.POST['respiratory_rate'],
+                bp_systole=request.POST['bp_systole'],
+                bp_diastole=request.POST['bp_diastole'],
+                creator=user
+            )
+            messages.success(request, 'Vitals recorded.')
+            return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
+    patient = Patient.objects.get(id=patient_id)
+    patient.age = calculate_age(patient.birthdate)
+    return render(request, 'treatment/create.html', {'patient': patient})
+
+def treatment_show(request, patient_id):
+    pass
+
 def treatment_get(request):
     return handle_api(request, Treatment)
 
@@ -165,8 +287,8 @@ def lab_result_store(request):
                 response_data['status'] = 'success'
                 response_data['message'] = 'Photo uploaded!'
                 # subprocess.Popen('') # Input script here
-                for f in filenames:
-                    lab_result_afb_store(user, settings.MEDIA_ROOT + 'result')
+                # for f in filenames:
+                #     lab_result_afb_store(user, settings.MEDIA_ROOT + 'result')
             else:
                 response_data['status'] = 'error'
                 response_data['message'] = 'Invalid username or password!'

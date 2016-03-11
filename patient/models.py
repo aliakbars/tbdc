@@ -4,16 +4,13 @@ from django.db import models
 from django.contrib.auth.models import User
 import random, string
 
-def generateID():
-    return ''.join(random.sample(set(string.letters.upper()), 3) + random.sample(string.digits, 5))
-
 # Create your models here.
 class Patient(models.Model):
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
     )
-    identifier = models.CharField(max_length=255, default=generateID)
+    identifier = models.CharField(max_length=255)
     first_name = models.CharField(max_length=127)
     last_name = models.CharField(max_length=127)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
@@ -25,7 +22,7 @@ class Patient(models.Model):
     country = models.CharField(max_length=63)
     phone_number = models.CharField(max_length=63)
     date_created = models.DateTimeField(auto_now_add=True)
-    # user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
 
 class Visit(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
@@ -42,7 +39,8 @@ class Vitals(models.Model):
     respiratory_rate = models.IntegerField()
     bp_systole = models.IntegerField()
     bp_diastole = models.IntegerField()
-    visit = models.ForeignKey(Visit, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User)
     date_created = models.DateTimeField(auto_now_add=True)
 
 class LabResult(models.Model):

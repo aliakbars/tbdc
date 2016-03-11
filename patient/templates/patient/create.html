@@ -24,9 +24,7 @@
         </div>
         <div class="form-group">
           <label for="birthdate">Birthdate</label>
-          <div class="input-group">
-            <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD" required="true" value="{{ data.birthdate }}" class="form-control"><span class="input-group-btn"><a class="btn btn-default"><span aria-hidden="true" class="glyphicon glyphicon-calendar"></span></a></span>
-          </div>
+          <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD" required="true" value="{{ data.birthdate }}" class="form-control">
         </div>
         <div class="form-group">
           <label for="gender">Gender</label><br>
@@ -59,8 +57,8 @@
           <input type="text" id="country" name="country" placeholder="" class="form-control">
         </div>
         <div class="form-group">
-          <label for="phone">Phone Number</label>
-          <input type="phone" id="phone" name="phone" placeholder="" class="form-control">
+          <label for="phone_number">Phone Number</label>
+          <input type="phone" id="phone_number" name="phone_number" placeholder="" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button><a href="{% url 'index' %}" class="btn btn-default">Cancel</a>
     </form>
@@ -68,7 +66,4 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="{% static 'js/moment.min.js' %}"></script>
-<script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
-<script type="text/javascript">$(function () {$("#birthdate").datetimepicker().data("DateTimePicker").format('YYYY-MM-DD');})</script>
 {% endblock %}

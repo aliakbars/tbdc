@@ -1,0 +1,30 @@
+{% extends 'patient/show.html' %}
+{% load staticfiles %}
+
+{% block pageheader %}
+<h1 class="page-header">Treatment</h1>
+{% endblock %}
+
+{% block body %}
+{% if messages %}
+<div class="alert alert-danger">
+    {% for message in messages %}
+    <i class="fa fa-exclamation-triangle"></i> <strong>Oops!</strong> {{ message }}
+    {% endfor %}
+</div>
+{% endif %}
+<form action="" method="post">
+  <div id="drugs"></div>
+  <br>
+  <button type="submit" class="btn btn-primary">Submit</button><a href="{% url 'patient.views.patient_show' patient.id %}" class="btn btn-default">Cancel</a>
+</form>
+{% endblock %}
+
+{% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+<script type="text/babel" src="{% static 'src/drugs.jsx' %}"></script>
+{% endblock %}

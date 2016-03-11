@@ -1,0 +1,15 @@
+{% extends 'patient/show.html' %}
+{% load staticfiles %}
+
+{% block pageheader %}
+<h1 class="page-header">Vitals - {{ column_name }}</h1>
+{% endblock %}
+
+{% block body %}
+<canvas id="myChart" width="800" height="400"></canvas>
+{% endblock %}
+
+{% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<script src="{% static 'js/vitals.js' %}"></script>
+{% endblock %}

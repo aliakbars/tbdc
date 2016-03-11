@@ -2,6 +2,13 @@
 {% load staticfiles %}
 
 {% block body %}
+{% if messages %}
+<div class="alert alert-danger">
+    {% for message in messages %}
+    <i class="fa fa-exclamation-triangle"></i> <strong>Oops!</strong> {{ message }}
+    {% endfor %}
+</div>
+{% endif %}
 <form action="" method="post">
   {% csrf_token %}
   <div class="form-group">

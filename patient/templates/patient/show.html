@@ -23,10 +23,11 @@
         <div class="panel-heading">
           <h3 class="panel-title"><i class="fa fa-stethoscope"></i> Diagnoses</h3>
         </div>
-        <div class="panel-body"><strong>Last updated: 16.Feb.2016</strong></div>
+        <div class="panel-body"><strong>Last updated: {{ last_visit.date_created }}</strong></div>
         <ul class="list-group">
-          <li class="list-group-item">TB Positive</li>
-          <li class="list-group-item">MDR Negative</li>
+          {% for visit in visits %}
+          <li class="list-group-item">{{ visit.diagnoses }}</li>
+          {% endfor %}
         </ul>
       </div>
       <div class="panel panel-success">
@@ -35,12 +36,12 @@
         </div>
         <div class="panel-body"><strong>Last updated: {{ vitals.date_created }}</strong></div>
         <ul class="list-group">
-          <li class="list-group-item"><a href="measurement.html" class="text-success">Height</a><span class="pull-right">{{ vitals.height }} cm</span></li>
-          <li class="list-group-item"><a href="measurement.html" class="text-success">Weight</a><span class="pull-right">{{ vitals.weight }} kg</span></li>
-          <li class="list-group-item"><a href="measurement.html" class="text-success">Temperature</a><span class="pull-right">{{ vitals.temperature }}°C</span></li>
-          <li class="list-group-item"><a href="measurement.html" class="text-success">Pulse</a><span class="pull-right">{{ vitals.pulse }}/min</span></li>
-          <li class="list-group-item"><a href="measurement.html" class="text-success">Respiratory rate</a><span class="pull-right">{{ vitals.respiratory_rate }}/min</span></li>
-          <li class="list-group-item"><a href="measurement.html" class="text-success">Blood pressure</a><span class="pull-right">{{ vitals.bp_systole }}/{{ vitals.bp_diastole }}</span></li>
+          <li class="list-group-item"><a href="{% url 'patient.views.vitals_trend' patient.id 'height' %}" class="text-success">Height</a><span class="pull-right">{{ vitals.height }} cm</span></li>
+          <li class="list-group-item"><a href="{% url 'patient.views.vitals_trend' patient.id 'weight' %}" class="text-success">Weight</a><span class="pull-right">{{ vitals.weight }} kg</span></li>
+          <li class="list-group-item"><a href="{% url 'patient.views.vitals_trend' patient.id 'temperature' %}" class="text-success">Temperature</a><span class="pull-right">{{ vitals.temperature }}°C</span></li>
+          <li class="list-group-item"><a href="{% url 'patient.views.vitals_trend' patient.id 'pulse' %}" class="text-success">Pulse</a><span class="pull-right">{{ vitals.pulse }}/min</span></li>
+          <li class="list-group-item"><a href="{% url 'patient.views.vitals_trend' patient.id 'respiratory_rate' %}" class="text-success">Respiratory rate</a><span class="pull-right">{{ vitals.respiratory_rate }}/min</span></li>
+          <li class="list-group-item"><a href="#" class="text-success">Blood pressure</a><span class="pull-right">{{ vitals.bp_systole }}/{{ vitals.bp_diastole }}</span></li>
         </ul>
       </div>
       <div class="panel panel-warning">
@@ -109,7 +110,7 @@
           <h3 class="panel-title"><span aria-hidden="true" class="glyphicon glyphicon-pencil"></span> Notes</h3>
         </div>
         <div class="panel-body">
-          <div class="col-sm-12"> None</div>
+          <div class="col-sm-12">{{ last_visit.notes }}</div>
         </div>
       </div>
     </div>
@@ -118,9 +119,9 @@
       <ul>
         <li><a href="#">End Visit</a></li>
         <li><a href="screening.html">TB Form</a></li>
-        <li><a href="note.html">Visit Notes</a></li>
-        <li><a href="vitals.html">Capture Vitals</a></li>
-        <li><a href="treatment.html">Treatment</a></li>
+        <li><a href="{% url 'patient.views.visit_create' patient.id %}">Visit Notes</a></li>
+        <li><a href="{% url 'patient.views.vitals_create' patient.id %}">Capture Vitals</a></li>
+        <li><a href="{% url 'patient.views.treatment_create' patient.id %}">Treatment</a></li>
       </ul>
       <legend>General Actions</legend>
       <ul>

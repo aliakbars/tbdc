@@ -14,5 +14,78 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
-<script type="text/babel" src="{% static 'src/patientlist.jsx' %}"></script>
+<script type="text/babel">
+var FilteredList = React.createClass({
+  filterList: function(event){
+    var updatedList = this.state.initialPatients;
+    updatedList = updatedList.filter(function(patient){
+      return patient.identifier.toLowerCase().search(
+        event.target.value.toLowerCase()) !== -1;
+    });
+    this.setState({patients: updatedList});
+  },
+  getInitialState: function(){
+    return {initialPatients: [], patients: []};
+  },
+  componentDidMount: function(){
+    $.ajax({
+      url: this.props.url + '?query=' + this.props.query,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        console.log(data);
+        this.setState({initialPatients: data.message, patients: data.message});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+  handleSubmit: function(e) {
+    
+  },
+  render: function(){
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="query">Find patient(s)</label>
+            <input name="query" type="text" className="form-control" id="query" placeholder="Search by ID or name" onChange={this.filterList} />
+          </div>
+        </form>
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th>Identifier</th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Birthdate</th>
+            </tr>
+          </thead>
+          <List patients={this.state.patients}/>
+        </table>
+      </div>
+    );
+  }
+});
+
+var List = React.createClass({
+  render: function() {
+    var patients = this.props.patients.map(function(patient) {
+      var xhref = "/patient/" + patient.id;
+      return (<tr key={patient.identifier}>
+        <td><a href={xhref}>{patient.identifier}</a></td>
+        <td>{patient.first_name} {patient.last_name}</td>
+        <td>{patient.gender}</td>
+        <td>{patient.birthdate}</td>
+      </tr>);
+    });
+    return (<tbody>
+        {patients}
+      </tbody>
+    );
+  }
+});
+ReactDOM.render(<FilteredList url="{% url 'patient.views.patient_get' %}" query="{{ query }}"/>, document.getElementById('patient-list'));
+</script>
 {% endblock %}
