@@ -287,8 +287,9 @@ def lab_result_store(request):
                 response_data['status'] = 'success'
                 response_data['message'] = 'Photo uploaded!'
                 # subprocess.Popen('') # Input script here
-                # for f in filenames:
-                #     lab_result_afb_store(user, settings.MEDIA_ROOT + 'result')
+                filenames = os.listdir(settings.MEDIA_ROOT + 'result')
+                for f in filenames:
+                    lab_result_afb_store(user, f)
             else:
                 response_data['status'] = 'error'
                 response_data['message'] = 'Invalid username or password!'
