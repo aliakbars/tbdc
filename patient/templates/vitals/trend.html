@@ -11,5 +11,25 @@
 
 {% block javascript %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
-<script src="{% static 'js/vitals.js' %}"></script>
+<script type="text/javascript">
+var data = {
+    // labels: ["09.Jan.2016", "10.Jan.2016", "21.Jan.2016", "01.Feb.2016", "10.Feb.2016"],
+    labels: [{{ labels|safe }}],
+    datasets: [
+        {
+            label: "{{ column_name }}",
+            fillColor: "rgba(164,196,0,0.2)",
+            strokeColor: "rgba(164,196,0,1)",
+            pointColor: "rgba(164,196,0,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(164,196,0,1)",
+            data: [{{ data }}]
+        },
+    ]
+};
+// Get the context of the canvas element we want to select
+var ctx = document.getElementById("myChart").getContext("2d");
+var myNewChart = new Chart(ctx).Line(data);
+</script>
 {% endblock %}

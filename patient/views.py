@@ -208,9 +208,11 @@ def vitals_create(request, patient_id):
 def vitals_trend(request, patient_id, column):
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)
-    vitals = patient.vitals_set.values(column)
+    vitals = patient.vitals_set.order_by('date_created')
+    labels = '"%s"' % ','.join([v.date_created.strftime('%Y-%m-%d') for v in vitals])
+    data = ','.join([str(v) for v in vitals.values_list(column, flat=True)])
     column_name = column.replace('_', ' ').title()
-    return render(request, 'vitals/trend.html', {'patient': patient, 'vitals': vitals, 'column_name': column_name})
+    return render(request, 'vitals/trend.html', {'patient': patient, 'labels': labels, 'data': data, 'column_name': column_name})
 
 def appointment_create(request, patient_id):
     if request.method == 'POST':
