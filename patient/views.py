@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -18,6 +19,7 @@ def generateID():
     return ''.join(random.sample(set(string.letters.upper()), 3) + random.sample(string.digits, 5))
 
 # Create your views here.
+@login_required
 def index(request):
     return render(request, 'index.html')
 
@@ -107,6 +109,50 @@ def patient_show(request, patient_id):
         'upcoming_appt': upcoming
     }
     return render(request, 'patient/show.html', data)
+
+def screening_create(request, patient_id):
+    if request.method == 'POST':
+        fields = [
+            'diagnosis',
+            'hiv',
+            'tb_exposure'
+        ]
+        empty_field = []
+        for field in fields:
+            if not request.POST.get(field, ''):
+                empty_field.append(field)
+        if empty_field:
+            messages.error(request, 'Please fill out these fields: %s' % ', '.join(empty_field))
+        else:
+            user = User.objects.get(id=1)
+            patient = Patient.objects.get(id=patient_id)
+            screening = patient.screening_set.create(
+                cough = request.POST.get('cough', False),
+                haemoptysis = request.POST.get('haemoptysis', False),
+                chest_pain = request.POST.get('chest_pain', False),
+                weight_loss = request.POST.get('weight_loss', False),
+                fatigue = request.POST.get('fatigue', False),
+                fever = request.POST.get('fever', False),
+                night_sweats = request.POST.get('night_sweats', False),
+                chills = request.POST.get('chills', False),
+                other_symptoms = request.POST.get('other_symptoms', False),
+                diagnosis = request.POST.get('diagnosis', ''),
+                tb_patient_status = request.POST.get('tb_patient_status', 0),
+                meningitis = request.POST.get('meningitis', False),
+                pregnant = request.POST.get('pregnant', False),
+                immunocompromised = request.POST.get('immunocompromised', False),
+                malnutrition = request.POST.get('malnutrition', False),
+                coinfection = request.POST.get('coinfection', False),
+                comorbid = request.POST.get('comorbid', False),
+                hiv = request.POST['hiv'],
+                tb_exposure = request.POST['tb_exposure'],
+                creator = user
+            )
+            messages.success(request, 'TB screening form recorded.')
+            return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
+    patient = Patient.objects.get(id=patient_id)
+    patient.age = calculate_age(patient.birthdate)
+    return render(request, 'screening/create.html', {'patient': patient})
 
 def visit_create(request, patient_id):
     if request.method == 'POST':
@@ -215,29 +261,37 @@ def handle_api(request, obj):
 def appointment_get(request):
     return handle_api(request, Appointment)
 
+@login_required
 def treatment_create(request, patient_id):
     if request.method == 'POST':
-        fields = ['height', 'weight', 'temperature', 'pulse', 'respiratory_rate', 'bp_systole', 'bp_diastole']
+        fields = ['medication', 'dosage', 'freq_day', 'freq_week', 'start_date', 'end_date']
         empty_field = []
         for field in fields:
-            if not request.POST.get(field, ''):
+            if not request.POST.getlist(field, ''):
+                print request.POST.getlist(field)
                 empty_field.append(field)
         if empty_field:
             messages.error(request, 'Please fill out these fields: %s' % ', '.join(empty_field))
         else:
             user = User.objects.get(id=1)
             patient = Patient.objects.get(id=patient_id)
-            vitals = patient.vitals_set.create(
-                height=request.POST['height'],
-                weight=request.POST['weight'],
-                temperature=request.POST['temperature'],
-                pulse=request.POST['pulse'],
-                respiratory_rate=request.POST['respiratory_rate'],
-                bp_systole=request.POST['bp_systole'],
-                bp_diastole=request.POST['bp_diastole'],
-                creator=user
-            )
-            messages.success(request, 'Vitals recorded.')
+            medications = request.POST.getlist('medication')
+            dosages = request.POST.getlist('dosage')
+            freq_days = request.POST.getlist('freq_day')
+            freq_weeks = request.POST.getlist('freq_week')
+            start_dates = request.POST.getlist('start_date')
+            end_dates = request.POST.getlist('end_date')
+            for i in range(len(request.POST.getlist('medication'))):
+                treatment = patient.vitals_set.create(
+                    medication=medications[i],
+                    dosage=dosages[i],
+                    freq_day=freq_days[i],
+                    freq_week=freq_weeks[i],
+                    start_date=start_dates[i],
+                    end_date=end_dates[i],
+                    creator=user
+                )
+            messages.success(request, 'Medications added.')
             return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)

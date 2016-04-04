@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tuberculosis Detection and Care System">
+    <meta name="author" content="Garuda2045">
+    <title>TBDeCare</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <form action="" method="post" class="form-signin"><img src="{% static 'img/logo.png' %}" alt="TBDeCare" width="300">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Please sign in</h2>
+        {% if messages %}
+        <div class="alert alert-danger">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        <label for="username" class="sr-only">Username</label>
+        <input type="text" name="username" id="username" placeholder="Username" required autofocus class="form-control">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="password" id="inputPassword" placeholder="Password" required class="form-control">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me">
+          </label>Remember me
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -73,25 +73,25 @@
 	        { className: 'form-group' },
 	        React.createElement(
 	          'label',
-	          { htmlFor: 'address' },
+	          { htmlFor: 'diagnosis' },
 	          'Diagnosis'
 	        ),
 	        React.createElement(
 	          'select',
-	          { className: 'form-control', onChange: this.onChange },
+	          { name: 'diagnosis', className: 'form-control', onChange: this.onChange },
 	          React.createElement(
 	            'option',
-	            null,
+	            { value: '1' },
 	            'Suspect TB'
 	          ),
 	          React.createElement(
 	            'option',
-	            null,
+	            { value: '2' },
 	            'Confirm positive TB'
 	          ),
 	          React.createElement(
 	            'option',
-	            null,
+	            { value: '0' },
 	            'Negative TB'
 	          )
 	        )
@@ -110,30 +110,30 @@
 	      { className: 'form-group' },
 	      React.createElement(
 	        'label',
-	        { htmlFor: 'address' },
+	        { htmlFor: 'tb_patient_status' },
 	        'TB Patient Status'
 	      ),
 	      React.createElement(
 	        'select',
-	        { className: 'form-control' },
+	        { name: 'tb_patient_status', className: 'form-control' },
 	        React.createElement(
 	          'option',
-	          null,
+	          { value: '1' },
 	          'New'
 	        ),
 	        React.createElement(
 	          'option',
-	          null,
+	          { value: '2' },
 	          'Chronic'
 	        ),
 	        React.createElement(
 	          'option',
-	          null,
+	          { value: '3' },
 	          'Relapse'
 	        ),
 	        React.createElement(
 	          'option',
-	          null,
+	          { value: '4' },
 	          'Drop out'
 	        )
 	      )

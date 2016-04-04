@@ -23,9 +23,9 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Hello,<span style="color: #A4C400"> Admin</span></a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+            <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+            <li><a href="{% url 'accounts.views.signout' %}"><i class="fa fa-sign-out"></i> Logout</a></li>
           </ul>
         </div>
       </div>

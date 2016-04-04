@@ -118,7 +118,7 @@
       <legend>Current Visit Actions</legend>
       <ul>
         <li><a href="#">End Visit</a></li>
-        <li><a href="screening.html">TB Form</a></li>
+        <li><a href="{% url 'patient.views.screening_create' patient.id %}">TB Form</a></li>
         <li><a href="{% url 'patient.views.visit_create' patient.id %}">Visit Notes</a></li>
         <li><a href="{% url 'patient.views.vitals_create' patient.id %}">Capture Vitals</a></li>
         <li><a href="{% url 'patient.views.treatment_create' patient.id %}">Treatment</a></li>

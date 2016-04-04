@@ -1,0 +1,122 @@
+{% extends 'patient/show.html' %}
+{% load staticfiles %}
+
+{% block pageheader %}
+<h1 class="page-header">TB Screening Form</h1>
+{% endblock %}
+
+{% block body %}
+{% if messages %}
+<div class="alert alert-danger">
+    {% for message in messages %}
+    <i class="fa fa-exclamation-triangle"></i> <strong>Oops!</strong> {{ message }}
+    {% endfor %}
+</div>
+{% endif %}
+<form action="" method="post">
+  {% csrf_token %}
+  <legend>Symptoms</legend>
+  <div class="checkbox">
+    <label for="cough">
+      <input type="checkbox" name="cough" id="cough" placeholder=""> Coughing that lasts three or more weeks
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="haemoptysis">
+      <input type="checkbox" name="haemoptysis" id="haemoptysis" placeholder=""> Coughing up blood
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="chest_pain">
+      <input type="checkbox" name="chest_pain" id="chest_pain" placeholder=""> Chest pain, or pain with breathing or coughing
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="weight_loss">
+      <input type="checkbox" name="weight_loss" id="weight_loss" placeholder=""> Unintentional weight loss
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="fatigue">
+      <input type="checkbox" name="fatigue" id="fatigue" placeholder=""> Fatigue
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="fever">
+      <input type="checkbox" name="fever" id="fever" placeholder=""> Fever
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="night_sweats">
+      <input type="checkbox" name="night_sweats" id="night_sweats" placeholder=""> Night sweats
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="chills">
+      <input type="checkbox" name="chills" id="chills" placeholder=""> Chills
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="other_symptoms">
+      <input type="checkbox" name="other_symptoms" id="other_symptoms" placeholder=""> Others
+    </label>
+  </div>
+  <legend>Diagnosis</legend>
+  <div id="diagnosis"></div>
+  <legend>Underlying Medical Condition</legend>
+  <div class="checkbox">
+    <label for="meningitis">
+      <input type="checkbox" name="meningitis" id="meningitis"> Meningitis
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="pregnant">
+      <input type="checkbox" name="pregnant" id="pregnant"> Pregnant
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="immunocompromised">
+      <input type="checkbox" name="immunocompromised" id="immunocompromised"> Immunocompromised patient
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="malnutrition">
+      <input type="checkbox" name="malnutrition" id="malnutrition"> Malnutrition
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="coinfection">
+      <input type="checkbox" name="coinfection" id="coinfection"> Co-infection with any infectious disease
+    </label>
+  </div>
+  <div class="checkbox">
+    <label for="comorbid">
+      <input type="checkbox" name="comorbid" id="comorbid"> Others
+    </label>
+  </div>
+  <legend>HIV Infection</legend>
+  <div class="form-group">
+    <label for="hiv">Is the patient infected by HIV?</label>
+    <select name="hiv" class="form-control">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+      <option value="99">Unknown</option>
+    </select>
+  </div>
+  <legend>TB Exposure</legend>
+  <div class="form-group">
+    <label for="tb_exposure">Select one:</label>
+    <select name="tb_exposure" class="form-control">
+      <option value="1">One member of family in the same house had previous TB</option>
+      <option value="2">One member of family in the same house has active TB infection</option>
+      <option value="3">Contact with person infected with TB</option>
+      <option value="99">Unknown</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button><a href="{% url 'patient.views.patient_show' patient.id %}" class="btn btn-default">Cancel</a>
+</form>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/tbform.js' %}"></script>
+{% endblock %}

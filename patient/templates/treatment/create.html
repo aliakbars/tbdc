@@ -14,9 +14,10 @@
 </div>
 {% endif %}
 <form action="" method="post">
-  <div id="drugs"></div>
-  <br>
-  <button type="submit" class="btn btn-primary">Submit</button><a href="{% url 'patient.views.patient_show' patient.id %}" class="btn btn-default">Cancel</a>
+    {% csrf_token %}
+    <div id="drugs"></div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button><a href="{% url 'patient.views.patient_show' patient.id %}" class="btn btn-default">Cancel</a>
 </form>
 {% endblock %}
 

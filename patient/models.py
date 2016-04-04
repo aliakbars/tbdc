@@ -86,3 +86,50 @@ class Appointment(models.Model):
     date = models.DateTimeField()
     creator = models.ForeignKey(User)
     date_created = models.DateTimeField(auto_now_add=True)
+
+class Screening(models.Model):
+    HIV_CHOICES = (
+        ('1', 'Yes'),
+        ('0', 'No'),
+        ('99', 'Unknown'),
+    )
+    TB_EXPOSURE_CHOICES = (
+        ('1', 'One member of family in the same house had previous TB'),
+        ('2', 'One member of family in the same house has active TB infection'),
+        ('3', 'Contact with person infected with TB'),
+        ('99', 'Unknown'),
+    )
+    DIAGNOSIS_CHOICES = (
+        ('1', 'Suspect TB'),
+        ('2', 'Confirm Positive TB'),
+        ('0', 'Negative TB'),
+    )
+    TB_PATIENT_STATUS_CHOICES = (
+        ('1', 'New'),
+        ('2', 'Chronic'),
+        ('3', 'Relapse'),
+        ('4', 'Drop out'),
+        ('99', 'NA'),
+    )
+    cough = models.BooleanField()
+    haemoptysis = models.BooleanField()
+    chest_pain = models.BooleanField()
+    weight_loss = models.BooleanField()
+    fatigue = models.BooleanField()
+    fever = models.BooleanField()
+    night_sweats = models.BooleanField()
+    chills = models.BooleanField()
+    other_symptoms = models.BooleanField()
+    diagnosis = models.CharField(max_length=7, choices=DIAGNOSIS_CHOICES)
+    tb_patient_status = models.CharField(max_length=7, choices=TB_PATIENT_STATUS_CHOICES, default=0)
+    meningitis = models.BooleanField()
+    pregnant = models.BooleanField()
+    immunocompromised = models.BooleanField()
+    malnutrition = models.BooleanField()
+    coinfection = models.BooleanField()
+    comorbid = models.BooleanField()
+    hiv = models.CharField(max_length=15, choices=HIV_CHOICES)
+    tb_exposure = models.CharField(max_length=7, choices=TB_EXPOSURE_CHOICES)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, default=1)
+    date_created = models.DateTimeField(auto_now_add=True)
