@@ -266,7 +266,7 @@ def appointment_get(request):
 @login_required
 def treatment_create(request, patient_id):
     if request.method == 'POST':
-        fields = ['medication', 'dosage', 'freq_day', 'freq_week', 'start_date', 'end_date']
+        fields = ['medication[]', 'dosage[]', 'freq_day[]', 'freq_week[]', 'start_date[]', 'end_date[]']
         empty_field = []
         for field in fields:
             if not request.POST.getlist(field, ''):
@@ -277,14 +277,14 @@ def treatment_create(request, patient_id):
         else:
             user = User.objects.get(id=1)
             patient = Patient.objects.get(id=patient_id)
-            medications = request.POST.getlist('medication')
-            dosages = request.POST.getlist('dosage')
-            freq_days = request.POST.getlist('freq_day')
-            freq_weeks = request.POST.getlist('freq_week')
-            start_dates = request.POST.getlist('start_date')
-            end_dates = request.POST.getlist('end_date')
-            for i in range(len(request.POST.getlist('medication'))):
-                treatment = patient.vitals_set.create(
+            medications = request.POST.getlist('medication[]')
+            dosages = request.POST.getlist('dosage[]')
+            freq_days = request.POST.getlist('freq_day[]')
+            freq_weeks = request.POST.getlist('freq_week[]')
+            start_dates = request.POST.getlist('start_date[]')
+            end_dates = request.POST.getlist('end_date[]')
+            for i in range(len(request.POST.getlist('medication[]'))):
+                treatment = patient.treatment_set.create(
                     medication=medications[i],
                     dosage=dosages[i],
                     freq_day=freq_days[i],

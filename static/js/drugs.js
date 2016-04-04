@@ -58,13 +58,13 @@
 	    for (var i = 1; i <= 7; i++) {
 	      options.push(React.createElement(
 	        'option',
-	        { key: i, value: '{i}' },
+	        { key: i, value: i },
 	        i,
 	        '/day'
 	      ));
 	      freq_week.push(React.createElement(
 	        'option',
-	        { key: i, value: '{i}' },
+	        { key: i, value: i },
 	        i,
 	        ' days/week'
 	      ));
