@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^(\d+)/vitals/create$', views.vitals_create),
     url(r'^(\d+)/vitals/trend/(\w+)$', views.vitals_trend),
     url(r'^(\d+)/screening/create$', views.screening_create),
+    url(r'^(\d+)/screening/(\d+)$', views.screening_show),
     url(r'^(\d+)/treatment/create$', views.treatment_create),
     url(r'^treatment/get$', views.treatment_get),
 ]

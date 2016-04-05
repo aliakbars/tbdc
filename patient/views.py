@@ -100,6 +100,7 @@ def patient_show(request, patient_id):
         upcoming = upcoming[0]
     data = {
         'patient': patient,
+        'screenings': patient.screening_set.all(),
         'lab_results': patient.labresult_set.all(),
         'treatments': patient.treatment_set.all(),
         'appointments': patient.appointment_set.filter(date__lt=date.today()),
@@ -153,6 +154,12 @@ def screening_create(request, patient_id):
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)
     return render(request, 'screening/create.html', {'patient': patient})
+
+def screening_show(request, patient_id, screening_id):
+    patient = Patient.objects.get(id=patient_id)
+    patient.age = calculate_age(patient.birthdate)
+    screening = Screening.objects.get(id=screening_id)
+    return render(request, 'screening/show.html', {'patient': patient, 'screening': screening})
 
 def visit_create(request, patient_id):
     if request.method == 'POST':
@@ -234,6 +241,7 @@ def appointment_create(request, patient_id):
                 creator=user
             )
             messages.success(request, 'Appointment scheduled.')
+            send_SMS('Appointment scheduled with dr. %s on %s' % (user.last_name, appointment.date), patient.phone_number)
             return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)
@@ -299,9 +307,6 @@ def treatment_create(request, patient_id):
     patient.age = calculate_age(patient.birthdate)
     return render(request, 'treatment/create.html', {'patient': patient})
 
-def treatment_show(request, patient_id):
-    pass
-
 def treatment_get(request):
     return handle_api(request, Treatment)
 
@@ -316,6 +321,7 @@ def lab_result_afb_store(creator, filename):
         result = 'MTB Positive (%d)' % int(parameters[0])
     lab_result = LabResult(patient=patient, test_name='Microscopic AFB', img=filename, result=result, creator=creator)
     lab_result.save()
+    send_SMS('Hasil BTA Anda telah didapat. Silakan hubungi kembali lab untuk mengetahui diagnosisnya.', patient.phone_number)
 
 def lab_result_create(request):
     return render(request, 'labresult/index.html')
@@ -375,3 +381,7 @@ def handle_upload(request, field_name):
         for chunk in request.FILES[field_name].chunks():
             dest.write(chunk)
         return filename
+
+def send_SMS(text, phone_number):
+    subprocess.Popen('echo "%s" | gammu sendsms TEXT %s' % (text, phone_number))
+    # subprocess.Popen('echo "%s" | sudo gammu-smsd-inject TEXT %s' % (text, phone_number))
