@@ -13,6 +13,8 @@
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    {% block css %}
+    {% endblock %}
   </head>
   <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -36,8 +38,7 @@
           <ul class="nav nav-sidebar">
             <li class="active"><a href="{% url 'patient.views.index' %}">Home</a></li>
             <li><a href="{% url 'patient.views.patient_index' %}">Patients</a></li>
-            <li><a href="prevalence.html">Analytics</a></li>
-            <li><a href="#">Export</a></li>
+            <li><a href="{% url 'patient.views.prevalence' %}">Analytics</a></li>
           </ul>
         </div>
         {% block content %}

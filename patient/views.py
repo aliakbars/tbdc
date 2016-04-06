@@ -373,6 +373,9 @@ def lab_result_show(request, patient_id, lab_result_id):
     user = lab_result.creator
     return render(request, 'labresult/show.html', {'patient': patient, 'lab_result': lab_result, 'user': user})
 
+def prevalence(request):
+    return render(request, 'prevalence.html')
+
 def handle_upload(request, field_name):
     today = datetime.today()
     extension = request.FILES[field_name].name.split('.')[-1]

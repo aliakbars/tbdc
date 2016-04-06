@@ -22,6 +22,7 @@ import patient.views
 
 urlpatterns = [
     url(r'^$', patient.views.index),
+    url(r'^prevalence/', patient.views.prevalence),
     url(r'^patient/', include('patient.urls')),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^admin/', admin.site.urls),
