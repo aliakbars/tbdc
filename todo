@@ -1,0 +1,35 @@
+Patient:
+# C - done
+# R - done
+# U - TODO!!!
+Visit:
+# C - done
+# R - TODO?
+# U - TODO?
+Vitals:
+# C - done
+# R - done
+# U -
+# D -
+LabResult:
+# C - done
+# R - done
+# U -
+# D -
+# Send SMS - TODO!!!
+Treatment:
+# C - done
+# R - Perlu kalau mau lihat efek samping
+# U -
+# D -
+Appointment:
+# C - done
+# R - TODO
+# U -
+# D -
+# Send SMS - TODO!!!
+Screening:
+# C - done
+# R - TODO
+# U -
+# D -
