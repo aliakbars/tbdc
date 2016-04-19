@@ -79,9 +79,11 @@ WSGI_APPLICATION = 'tbdc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': os.path.join(BASE_DIR, 'mysql.cnf'),
-        }
+        'NAME': 'tbdc',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -123,13 +125,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/var/www/html/static/'
+#STATIC_ROOT = '/var/www/html/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/www/html/media/'
-FILE_UPLOAD_TEMP_DIR = '/tmp/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, 'media')
 FILE_UPLOAD_MAX_MEMORY_SIZE = 0

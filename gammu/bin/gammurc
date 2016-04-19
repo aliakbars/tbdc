@@ -1,0 +1,22 @@
+; This is a sample ~/.gammurc file.
+; In Unix/Linux  copy it into your home directory and name it .gammurc
+;                or into /etc and name it gammurc
+; In Win32       copy it into directory with Gammu.exe and name gammurc
+; More about parameters later
+; Anything behind ; or # is comment.
+; -----------------------------------------------------------------------------
+
+[gammu]
+
+device = com5:
+connection = at
+; Do not use model configuration unless you really need it
+;model = 6110
+;synchronizetime = yes
+;logfile = gammulog
+;logformat = textall
+;use_locking = yes
+;gammuloc = locfile
+;startinfo = yes
+;gammucoding = utf8
+;usephonedb = yes

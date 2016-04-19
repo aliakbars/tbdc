@@ -1,0 +1,27 @@
+Tue 2016/04/05 23:15:48 gammu-smsd[928]: Using SQL service
+Tue 2016/04/05 23:15:48 gammu-smsd[928]: Configuring Gammu SMSD...
+Tue 2016/04/05 23:15:48 gammu-smsd[928]: Warning: No PIN code in smsdrc file
+Tue 2016/04/05 23:15:48 gammu-smsd[928]: CommTimeout=30, SendTimeout=30, ReceiveFrequency=0, ResetFrequency=0, HardResetFrequency=0
+Tue 2016/04/05 23:15:48 gammu-smsd[928]: checks: CheckSecurity=1, CheckBattery=1, CheckSignal=1
+Tue 2016/04/05 23:15:48 gammu-smsd[928]: mode: Send=1, Receive=1
+Tue 2016/04/05 23:15:48 gammu-smsd[928]: deliveryreport = no
+Tue 2016/04/05 23:15:48 gammu-smsd[928]: phoneid = 
+Tue 2016/04/05 23:15:48 gammu-smsd[928]: Unknown DB driver
+Tue 2016/04/05 23:15:54 gammu-smsd[13852]: Using SQL service
+Tue 2016/04/05 23:15:54 gammu-smsd[13852]: Configuring Gammu SMSD...
+Tue 2016/04/05 23:15:54 gammu-smsd[13852]: Warning: No PIN code in smsdrc file
+Tue 2016/04/05 23:15:54 gammu-smsd[13852]: CommTimeout=30, SendTimeout=30, ReceiveFrequency=0, ResetFrequency=0, HardResetFrequency=0
+Tue 2016/04/05 23:15:54 gammu-smsd[13852]: checks: CheckSecurity=1, CheckBattery=1, CheckSignal=1
+Tue 2016/04/05 23:15:54 gammu-smsd[13852]: mode: Send=1, Receive=1
+Tue 2016/04/05 23:15:54 gammu-smsd[13852]: deliveryreport = no
+Tue 2016/04/05 23:15:54 gammu-smsd[13852]: phoneid = 
+Tue 2016/04/05 23:15:54 gammu-smsd[13852]: Unknown DB driver
+Tue 2016/04/05 23:16:04 gammu-smsd[9628]: Using SQL service
+Tue 2016/04/05 23:16:04 gammu-smsd[9628]: Configuring Gammu SMSD...
+Tue 2016/04/05 23:16:04 gammu-smsd[9628]: Warning: No PIN code in smsdrc file
+Tue 2016/04/05 23:16:04 gammu-smsd[9628]: CommTimeout=30, SendTimeout=30, ReceiveFrequency=0, ResetFrequency=0, HardResetFrequency=0
+Tue 2016/04/05 23:16:04 gammu-smsd[9628]: checks: CheckSecurity=1, CheckBattery=1, CheckSignal=1
+Tue 2016/04/05 23:16:04 gammu-smsd[9628]: mode: Send=1, Receive=1
+Tue 2016/04/05 23:16:04 gammu-smsd[9628]: deliveryreport = no
+Tue 2016/04/05 23:16:04 gammu-smsd[9628]: phoneid = 
+Tue 2016/04/05 23:16:04 gammu-smsd[9628]: Unknown DB driver
