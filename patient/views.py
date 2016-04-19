@@ -312,7 +312,7 @@ def treatment_create(request, patient_id):
                     end_date=end_dates[i],
                     creator=user
 		    
-		    uri = "tbdc://tp=1&md=%s&do=%s&fd=%s&fw=%s&sd=%s&ed=%s" % (medication[i], dosage[i], freq_days[i], freq_weeks[i], start_dates[i], end_dates[i])
+		    uri = "tbdc://tp=1&md=%s&do=%s&fd=%s&fw=%s&sd=%s&ed=%s" % (medication, dosage, freq_day, freq_week, start_date, end_date)
 		    print uri
 		    send_SMS('Please get the medication (%s) before %s. Add to shedule: %s' % (medications[i], start_dates[i], uri), patient.phone_number)
                 )
