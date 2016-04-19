@@ -80,8 +80,13 @@ class Treatment(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
 class Appointment(models.Model):
+    SERVICE_CHOICES = (
+        ('C', 'Consultation'),
+        ('L', 'Lab test'),
+        ('M', 'Medical check up'),
+    )
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    service_type = models.CharField(max_length=255)
+    service_type = models.CharField(max_length=255, choices=SERVICE_CHOICES)
     agenda = models.TextField()
     date = models.DateTimeField()
     creator = models.ForeignKey(User)

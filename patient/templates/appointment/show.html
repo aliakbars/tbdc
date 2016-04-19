@@ -1,0 +1,17 @@
+{% extends 'patient/show.html' %}
+{% load staticfiles %}
+
+{% block pageheader %}
+<h1 class="page-header">Appointment</h1>
+{% endblock %}
+
+{% block body %}
+<h4>Service type</h4>
+<p id="service_type">{{ appointment.get_service_type_display }}</p>
+<h4>Agenda</h4>
+<p id="agenda">{{ appointment.agenda }}</p>
+<h4>Date</h4>
+<p id="date">{{ appointment.date }}</p>
+<br>
+<a href="{% url 'patient.views.patient_show' patient.id %}" class="btn btn-default">Back</a>
+{% endblock %}

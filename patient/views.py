@@ -18,14 +18,14 @@ import os
 def generateID():
     return ''.join(random.sample(set(string.letters.upper()), 3) + random.sample(string.digits, 5))
 
+def calculate_age(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+
 # Create your views here.
 @login_required
 def index(request):
     return render(request, 'index.html')
-
-def calculate_age(born):
-    today = date.today()
-    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
 def patient_get(request):
     response_data = {}
@@ -46,9 +46,11 @@ def patient_get(request):
     response_data['message'] = 'Method not allowed!'
     return HttpResponse(json.dumps(response_data), content_type='application/json')
 
+@login_required
 def patient_index(request):
     return render(request, 'patient/index.html', {'query': request.GET.get('query', '')})
 
+@login_required
 def patient_create(request):
     if request.method == 'POST':
         fields = ['first_name', 'last_name', 'birthdate', 'address', 'city', 'province', 'country', 'phone_number']
@@ -84,6 +86,7 @@ def patient_create(request):
     data['gender'] = request.GET.get('gender', '')
     return render(request, 'patient/create.html', {'data': data})
 
+@login_required
 def patient_show(request, patient_id):
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)
@@ -247,6 +250,12 @@ def appointment_create(request, patient_id):
     patient.age = calculate_age(patient.birthdate)
     return render(request, 'appointment/create.html', {'patient': patient})
 
+def appointment_show(request, patient_id, appointment_id):
+    patient = Patient.objects.get(id=patient_id)
+    patient.age = calculate_age(patient.birthdate)
+    appointment = Appointment.objects.get(id=appointment_id)
+    return render(request, 'appointment/show.html', {'patient': patient, 'appointment': appointment})
+
 def handle_api(request, obj):
     response_data = {}
     if request.method == 'GET':
@@ -302,6 +311,7 @@ def treatment_create(request, patient_id):
                     creator=user
                 )
             messages.success(request, 'Medications added.')
+            send_SMS('Please get the medications (%s) before %s' % (', '.join(medications), start_dates[0]), patient.phone_number)
             return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)
@@ -326,7 +336,6 @@ def lab_result_afb_store(creator, filename):
 def lab_result_create(request):
     return render(request, 'labresult/index.html')
 
-@csrf_exempt
 @csrf_exempt
 def lab_result_store(request):
     response_data = {}
@@ -399,7 +408,7 @@ def handle_upload(request, field_name):
 def send_SMS(text, phone_number):
     # subprocess.Popen('echo "%s" | gammu sendsms TEXT %s' % (text, phone_number))
     try:
-	path_to_gammu = os.path.join(settings.BASE_DIR, 'gammu\\bin\\smsdrc')
-	subprocess.Popen("gammu-smsd-inject -c %s TEXT %s -text \"%s\"" % (path_to_gammu, phone_number, text))
+    	path_to_gammu = os.path.join(settings.BASE_DIR, 'gammu\\bin\\smsdrc')
+    	subprocess.Popen("gammu-smsd-inject -c %s TEXT %s -text \"%s\"" % (path_to_gammu, phone_number, text))
     except:
         pass

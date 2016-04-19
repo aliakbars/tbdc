@@ -76,7 +76,7 @@
         <div class="panel-body"><strong>Upcoming appointment: {{ upcoming_appt.date }}</strong></div>
         <div class="list-group">
             {% for appointment in appointments %}
-            <a href="#" class="list-group-item">{{ appointment.date }}</a>
+            <a href="{% url 'patient.views.appointment_show' patient.id appointment.id %}" class="list-group-item">{{ appointment.date }}</a>
             {% endfor %}
         </div>
       </div>

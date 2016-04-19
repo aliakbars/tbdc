@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^get$', views.patient_get),
     url(r'^create$', views.patient_create),
     url(r'^(\d+)/appointment/create$', views.appointment_create),
+    url(r'^(\d+)/appointment/(\d+)$', views.appointment_show),
     url(r'^appointment/get$', views.appointment_get),
     url(r'^lab_result/create$', views.lab_result_create),
     url(r'^lab_result/store$', views.lab_result_store),
