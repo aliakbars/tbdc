@@ -1,0 +1,15 @@
+[gammu]
+port = com5
+connection = at
+
+[smsd]
+Service = sql
+Driver = odbc
+SQL = mysql
+host = localmysql
+logfile = smsdlog
+PIN =
+User = root
+Password =  
+Database = sms
+checksecurity = 0

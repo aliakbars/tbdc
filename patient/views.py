@@ -101,7 +101,7 @@ def patient_show(request, patient_id):
     data = {
         'patient': patient,
         'screenings': patient.screening_set.all(),
-        'lab_results': patient.labresult_set.all(),
+        'lab_results': patient.labresult_set.order_by('-date_created').all(),
         'treatments': patient.treatment_set.all(),
         'appointments': patient.appointment_set.filter(date__lt=date.today()),
         'visits': visits,
@@ -321,11 +321,12 @@ def lab_result_afb_store(creator, filename):
         result = 'MTB Positive (%d)' % int(parameters[0])
     lab_result = LabResult(patient=patient, test_name='Microscopic AFB', img=filename, result=result, creator=creator)
     lab_result.save()
-    send_SMS('Hasil BTA Anda telah didapat. Silakan hubungi kembali lab untuk mengetahui diagnosisnya.', patient.phone_number)
+    send_SMS('Your BTA test result is ready. Contact lab to find out about the diagnosis.', patient.phone_number)
 
 def lab_result_create(request):
     return render(request, 'labresult/index.html')
 
+@csrf_exempt
 @csrf_exempt
 def lab_result_store(request):
     response_data = {}
@@ -348,15 +349,10 @@ def lab_result_store(request):
                 extension = filename.split('.')[-1]
                 response_data['status'] = 'success'
                 response_data['message'] = 'Photo uploaded!'
-                # subprocess.Popen('') # Input script here
-                from random import randint
-                from shutil import copyfile
-                bacillus = randint(0,5)
-                copyfile(settings.MEDIA_ROOT + filename, settings.MEDIA_ROOT + 'result/' + str(bacillus) + '_' + filename)
-                # subprocess.Popen('') # Input script here
-                filenames = os.listdir(settings.MEDIA_ROOT + 'result')
-                for f in filenames:
-                    lab_result_afb_store(user, f)
+		
+		import threading
+		t = threading.Thread(target=save_result, args=(filename, user,))
+		t.start()
             else:
                 response_data['status'] = 'error'
                 response_data['message'] = 'Invalid username or password!'
@@ -366,6 +362,21 @@ def lab_result_store(request):
     response_data['message'] = 'Method not allowed!'
     return HttpResponse(json.dumps(response_data), content_type='application/json')
 
+def save_result(filename, user):
+	path_to_matlab = os.path.join(settings.BASE_DIR, 'media\\')
+	currentdir = os.getcwd()
+	os.chdir(path_to_matlab)
+	os.system("tbdetect.exe %s" % (filename))
+	print "halo sudah selesai lho"
+	import time
+	time.sleep(25)
+	os.chdir(currentdir)
+	filenames = os.listdir(settings.MEDIA_ROOT + 'result')
+	for f in filenames:
+	    print f 
+	    if filename in f:
+		lab_result_afb_store(user, f)
+	
 def lab_result_show(request, patient_id, lab_result_id):
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)
@@ -380,11 +391,15 @@ def handle_upload(request, field_name):
     today = datetime.today()
     extension = request.FILES[field_name].name.split('.')[-1]
     filename = today.strftime("%y%m%d_%H%M%S") + '_' + request.POST.get('patient_id','') + '.' + extension
-    with open(settings.MEDIA_ROOT + filename, 'wb+') as dest:
+    with open(settings.MEDIA_ROOT +  "/target/"  + filename, 'wb+') as dest:
         for chunk in request.FILES[field_name].chunks():
             dest.write(chunk)
         return filename
 
 def send_SMS(text, phone_number):
-    subprocess.Popen('echo "%s" | gammu sendsms TEXT %s' % (text, phone_number))
-    # subprocess.Popen('echo "%s" | sudo gammu-smsd-inject TEXT %s' % (text, phone_number))
+    # subprocess.Popen('echo "%s" | gammu sendsms TEXT %s' % (text, phone_number))
+    try:
+	path_to_gammu = os.path.join(settings.BASE_DIR, 'gammu\\bin\\smsdrc')
+	subprocess.Popen("gammu-smsd-inject -c %s TEXT %s -text \"%s\"" % (path_to_gammu, phone_number, text))
+    except:
+        pass
