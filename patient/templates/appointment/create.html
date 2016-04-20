@@ -1,6 +1,10 @@
 {% extends 'patient/show.html' %}
 {% load staticfiles %}
 
+{% block pageheader %}
+<h1 class="page-header">Appointment</h1>
+{% endblock %}
+
 {% block body %}
 {% if messages %}
 <div class="alert alert-danger">
