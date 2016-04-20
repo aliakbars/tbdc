@@ -244,7 +244,9 @@ def appointment_create(request, patient_id):
                 creator=user
             )
             messages.success(request, 'Appointment scheduled.')
-	    uri = "tbdc://tp=0&sv=%s&dt=%s" % (request.POST['service_type'], request.POST['date'])
+	    newdate = request.POST['date'].replace(" ", "-")
+	    newdate = newdate.replace(":", "-")
+	    uri = "tbdc://tp=0&sv=%s&dt=%s" % (request.POST['service_type'], newdate)
 	    print uri
             send_SMS('Appointment scheduled with dr. %s on %s. Add to schedule: %s' % (user.last_name, appointment.date, uri), patient.phone_number)
             return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
@@ -311,11 +313,14 @@ def treatment_create(request, patient_id):
                     start_date=start_dates[i],
                     end_date=end_dates[i],
                     creator=user
-		    
-		    uri = "tbdc://tp=1&md=%s&do=%s&fd=%s&fw=%s&sd=%s&ed=%s" % (medication, dosage, freq_day, freq_week, start_date, end_date)
-		    print uri
-		    send_SMS('Please get the medication (%s) before %s. Add to shedule: %s' % (medications[i], start_dates[i], uri), patient.phone_number)
                 )
+		newsdate = start_dates[i].replace(" ", "-")
+	        newsdate = newsdate.replace(":", "-")
+		newedate = end_dates[i].replace(" ", "-")
+	        newedate = newedate.replace(":", "-")
+		uri = "tbdc://tp=1&md=%s&fd=%s&fw=%s&sd=%s&ed=%s" % (medications[i], freq_days[i], freq_weeks[i], newsdate, newedate)
+		print uri
+		send_SMS('Please get the medication (%s) before %s. Add to shedule: %s' % (medications[i], start_dates[i], uri), patient.phone_number)
             messages.success(request, 'Medications added.')
             return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
     patient = Patient.objects.get(id=patient_id)
