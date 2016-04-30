@@ -387,20 +387,20 @@ def lab_result_store(request):
     return HttpResponse(json.dumps(response_data), content_type='application/json')
 
 def save_result(filename, user):
-	path_to_matlab = os.path.join(settings.BASE_DIR, 'media/')
-	currentdir = os.getcwd()
-	os.chdir(path_to_matlab)
-	os.system("%s/run_tbdetect.sh /usr/local/MATLAB/MATLAB_Runtime/v85/ %s" % (path_to_matlab, filename))
-	print "Matlab ran!"
-	import time
-	time.sleep(10)
-	os.chdir(currentdir)
-	filenames = os.listdir(settings.MEDIA_ROOT + 'result')
-	for f in filenames:
-	    print f 
-	    if filename in f:
-		lab_result_afb_store(user, f)
-	
+    path_to_matlab = os.path.join(settings.BASE_DIR, 'media/')
+    currentdir = os.getcwd()
+    os.chdir(path_to_matlab)
+    os.system("%s/run_tbdetect.sh /usr/local/MATLAB/MATLAB_Runtime/v85/ %s" % (path_to_matlab, filename))
+    print "Matlab ran!"
+    import time
+    time.sleep(10)
+    os.chdir(currentdir)
+    filenames = os.listdir(settings.MEDIA_ROOT + 'result')
+    for f in filenames:
+        print f 
+        if filename in f:
+            lab_result_afb_store(user, f)
+
 def lab_result_show(request, patient_id, lab_result_id):
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)
