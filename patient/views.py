@@ -314,15 +314,15 @@ def treatment_create(request, patient_id):
                     end_date=end_dates[i],
                     creator=user
                 )
-		newsdate = start_dates[i].replace(" ", "-")
-	        newsdate = newsdate.replace(":", "-")
-		newedate = end_dates[i].replace(" ", "-")
-	        newedate = newedate.replace(":", "-")
-		uri = "tbdc://tp=1&md=%s&fd=%s&fw=%s&sd=%s&ed=%s" % (medications[i], freq_days[i], freq_weeks[i], newsdate, newedate)
-		print uri
-		send_SMS('Please get the medication (%s) before %s. Add to shedule: %s' % (medications[i], start_dates[i], uri), patient.phone_number)
-            messages.success(request, 'Medications added.')
-            return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
+        newsdate = start_dates[i].replace(" ", "-")
+        newsdate = newsdate.replace(":", "-")
+        newedate = end_dates[i].replace(" ", "-")
+            newedate = newedate.replace(":", "-")
+        uri = "tbdc://tp=1&md=%s&fd=%s&fw=%s&sd=%s&ed=%s" % (medications[i], freq_days[i], freq_weeks[i], newsdate, newedate)
+        print uri
+        send_SMS('Please get the medication (%s) before %s. Add to shedule: %s' % (medications[i], start_dates[i], uri), patient.phone_number)
+        messages.success(request, 'Medications added.')
+        return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)
     return render(request, 'treatment/create.html', {'patient': patient})
