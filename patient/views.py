@@ -364,14 +364,19 @@ def lab_result_store(request):
         else:
             user = authenticate(username=request.POST.get('username',''), password=request.POST.get('password',''))
             if user is not None:
-                filename = handle_upload(request, field_name='photo')
-                extension = filename.split('.')[-1]
-                response_data['status'] = 'success'
-                response_data['message'] = 'Photo uploaded!'
-		
-		import threading
-		t = threading.Thread(target=save_result, args=(filename, user,))
-		t.start()
+                try:
+                    patient = Patient.objects.get(identifier=request.POST['patient_id'])
+                    filename = handle_upload(request, field_name='photo')
+                    extension = filename.split('.')[-1]
+                    response_data['status'] = 'success'
+                    response_data['message'] = 'Photo uploaded!'
+
+                    import threading
+                    t = threading.Thread(target=save_result, args=(filename, user,))
+                    t.start()
+                except Exception, e:
+                    response_data['status'] = 'error'
+                    response_data['message'] = str(e)
             else:
                 response_data['status'] = 'error'
                 response_data['message'] = 'Invalid username or password!'
@@ -382,13 +387,13 @@ def lab_result_store(request):
     return HttpResponse(json.dumps(response_data), content_type='application/json')
 
 def save_result(filename, user):
-	path_to_matlab = os.path.join(settings.BASE_DIR, 'media\\')
+	path_to_matlab = os.path.join(settings.BASE_DIR, 'media/')
 	currentdir = os.getcwd()
 	os.chdir(path_to_matlab)
-	os.system("tbdetect.exe %s" % (filename))
-	print "halo sudah selesai lho"
+	os.system("%s/run_tbdetect.sh /usr/local/MATLAB/MATLAB_Runtime/v85/ %s" % (path_to_matlab, filename))
+	print "Matlab ran!"
 	import time
-	time.sleep(25)
+	time.sleep(10)
 	os.chdir(currentdir)
 	filenames = os.listdir(settings.MEDIA_ROOT + 'result')
 	for f in filenames:
@@ -418,7 +423,7 @@ def handle_upload(request, field_name):
 def send_SMS(text, phone_number):
     # subprocess.Popen('echo "%s" | gammu sendsms TEXT %s' % (text, phone_number))
     try:
-    	path_to_gammu = os.path.join(settings.BASE_DIR, 'gammu\\bin\\smsdrc')
+        path_to_gammu = os.path.join(settings.BASE_DIR, 'gammu/bin/smsdrc')
     	subprocess.Popen("gammu-smsd-inject -c %s TEXT %s -text \"%s\"" % (path_to_gammu, phone_number, text))
     except:
         pass
