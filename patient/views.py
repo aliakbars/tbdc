@@ -248,8 +248,8 @@ def appointment_create(request, patient_id):
         newdate = newdate.replace(":", "-")
         uri = "tbdc://tp=0&sv=%s&dt=%s" % (request.POST['service_type'], newdate)
         print uri
-            send_SMS('Appointment scheduled with dr. %s on %s. Add to schedule: %s' % (user.last_name, appointment.date, uri), patient.phone_number)
-            return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
+        send_SMS('Appointment scheduled with dr. %s on %s. Add to schedule: %s' % (user.last_name, appointment.date, uri), patient.phone_number)
+        return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
     patient = Patient.objects.get(id=patient_id)
     patient.age = calculate_age(patient.birthdate)
     return render(request, 'appointment/create.html', {'patient': patient})
