@@ -405,7 +405,7 @@ def save_result(filename, user, engine='python'):
             if filename in f:
                 parameters = f.split('_')
                 result = int(parameters[0])
-    identifier = f.split('_')[-1].split('.')[0]
+    identifier = filename.split('_')[-1].split('.')[0]
     lab_result_afb_store(identifier, result, user, filename)
 
 def lab_result_show(request, patient_id, lab_result_id):
