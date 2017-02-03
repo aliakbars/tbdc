@@ -14,8 +14,11 @@ from patient.quinn import detect_mtb
 from datetime import datetime, date
 from twilio.rest import TwilioRestClient
 import json
+import logging
 import subprocess
 import os
+
+logger = logging.getLogger(__name__)
 
 def generateID():
     return ''.join(random.sample(set(string.letters.upper()), 3) + random.sample(string.digits, 5))
@@ -235,7 +238,7 @@ def appointment_create(request, patient_id):
                 empty_field.append(field)
         if empty_field:
             messages.error(request, 'Please fill out these fields: %s' % ', '.join(empty_field))
-            print 'Please fill out these fields: %s' % ', '.join(empty_field)
+            logger.error('Please fill out these fields: %s' % ', '.join(empty_field))
         else:
             user = User.objects.get(id=1)
             patient = Patient.objects.get(id=patient_id)
@@ -249,7 +252,6 @@ def appointment_create(request, patient_id):
             newdate = request.POST['date'].replace(" ", "-")
             newdate = newdate.replace(":", "-")
             uri = "tbdc://tp=0&sv=%s&dt=%s" % (request.POST['service_type'], newdate)
-            print uri
             send_SMS('Appointment scheduled with dr. %s on %s. Add to schedule: %s' % (user.last_name, appointment.date, uri), patient.phone_number)
             return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
     patient = Patient.objects.get(id=patient_id)
@@ -293,7 +295,6 @@ def treatment_create(request, patient_id):
         empty_field = []
         for field in fields:
             if not request.POST.getlist(field, ''):
-                print request.POST.getlist(field)
                 empty_field.append(field)
         if empty_field:
             messages.error(request, 'Please fill out these fields: %s' % ', '.join(empty_field))
@@ -321,7 +322,6 @@ def treatment_create(request, patient_id):
             newedate = end_dates[i].replace(" ", "-")
             newedate = newedate.replace(":", "-")
             uri = "tbdc://tp=1&md=%s&fd=%s&fw=%s&sd=%s&ed=%s" % (medications[i], freq_days[i], freq_weeks[i], newsdate, newedate)
-            print uri
             send_SMS('Please get the medication (%s) before %s. Add to shedule: %s' % (medications[i], start_dates[i], uri), patient.phone_number)
             messages.success(request, 'Medications added.')
             return HttpResponseRedirect(reverse('patient.views.patient_show', args=(patient.id,)))
@@ -390,12 +390,13 @@ def save_result(filename, user, engine='python'):
     currentdir = os.getcwd()
     os.chdir(model_path)
     if engine == 'python':
+        logger.info("Keras ran!")
         result = int(detect_mtb('target/' + filename))
         if result < 3:
             result = 0
     elif engine == 'matlab':
         os.system("%s/run_tbdetect.sh /usr/local/MATLAB/MATLAB_Runtime/v85/ %s" % (model_path, filename))
-        print "Matlab ran!"
+        logger.info("Matlab ran!")
         import time
         time.sleep(10)
         os.chdir(currentdir)
@@ -441,4 +442,4 @@ def send_SMS(text, phone_number, debug=True):
                         to=phone_number,    # Replace with your phone number
                         from_="+18573050486") # Replace with your Twilio number
         except TwilioRestException as e:
-            print e
+            logger.error(e)
