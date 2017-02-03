@@ -391,6 +391,8 @@ def save_result(filename, user, engine='python'):
     os.chdir(model_path)
     if engine == 'python':
         result = int(detect_mtb('target/' + filename))
+        if result < 3:
+            result = 0
     elif engine == 'matlab':
         os.system("%s/run_tbdetect.sh /usr/local/MATLAB/MATLAB_Runtime/v85/ %s" % (model_path, filename))
         print "Matlab ran!"
