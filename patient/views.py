@@ -424,18 +424,19 @@ def handle_upload(request, field_name):
             dest.write(chunk)
         return filename
 
-def send_SMS(text, phone_number):
-    # subprocess.Popen('echo "%s" | gammu sendsms TEXT %s' % (text, phone_number))
-    try:
-        # path_to_gammu = os.path.join(settings.BASE_DIR, 'gammu/bin/smsdrc')
-        # subprocess.Popen("gammu-smsd-inject -c %s TEXT %s -text \"%s\"" % (path_to_gammu, phone_number, text))
-        account_sid = "AC986275e7e5eb4d51a7c9951539be59a8" # Your Account SID from www.twilio.com/console
-        auth_token  = "c5b5a1bd660f5e5c450a3431230da485"  # Your Auth Token from www.twilio.com/console
+def send_SMS(text, phone_number, debug=True):
+    if not debug:
+        # subprocess.Popen('echo "%s" | gammu sendsms TEXT %s' % (text, phone_number))
+        try:
+            # path_to_gammu = os.path.join(settings.BASE_DIR, 'gammu/bin/smsdrc')
+            # subprocess.Popen("gammu-smsd-inject -c %s TEXT %s -text \"%s\"" % (path_to_gammu, phone_number, text))
+            account_sid = "AC986275e7e5eb4d51a7c9951539be59a8" # Your Account SID from www.twilio.com/console
+            auth_token  = "c5b5a1bd660f5e5c450a3431230da485"  # Your Auth Token from www.twilio.com/console
 
-        client = TwilioRestClient(account_sid, auth_token)
+            client = TwilioRestClient(account_sid, auth_token)
 
-        message = client.messages.create(body=text,
-                    to=phone_number,    # Replace with your phone number
-                    from_="+18573050486") # Replace with your Twilio number
-    except TwilioRestException as e:
-        print e
+            message = client.messages.create(body=text,
+                        to=phone_number,    # Replace with your phone number
+                        from_="+18573050486") # Replace with your Twilio number
+        except TwilioRestException as e:
+            print e
