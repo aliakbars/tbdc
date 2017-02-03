@@ -10,7 +10,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from patient.models import *
+from patient.quinn import detect_mtb
 from datetime import datetime, date
+from twilio.rest import TwilioRestClient
 import json
 import subprocess
 import os
@@ -330,15 +332,12 @@ def treatment_create(request, patient_id):
 def treatment_get(request):
     return handle_api(request, Treatment)
 
-def lab_result_afb_store(creator, filename):
-    parameters = filename.split('_')
-    result = int(parameters[0])
-    identifier = parameters[-1].split('.')[0]
+def lab_result_afb_store(identifier, result, creator, filename):
     patient = Patient.objects.get(identifier=identifier)
     if result == 0:
         result = 'MTB Negative'
     else:
-        result = 'MTB Positive (%d)' % int(parameters[0])
+        result = 'MTB Positive (%d)' % result
     lab_result = LabResult(patient=patient, test_name='Microscopic AFB', img=filename, result=result, creator=creator)
     lab_result.save()
     send_SMS('Your BTA test result is ready. Contact lab to find out about the diagnosis.', patient.phone_number)
@@ -386,20 +385,25 @@ def lab_result_store(request):
     response_data['message'] = 'Method not allowed!'
     return HttpResponse(json.dumps(response_data), content_type='application/json')
 
-def save_result(filename, user):
-    path_to_matlab = os.path.join(settings.BASE_DIR, 'media/')
+def save_result(filename, user, engine='python'):
+    model_path = os.path.join(settings.BASE_DIR, 'media/')
     currentdir = os.getcwd()
-    os.chdir(path_to_matlab)
-    os.system("%s/run_tbdetect.sh /usr/local/MATLAB/MATLAB_Runtime/v85/ %s" % (path_to_matlab, filename))
-    print "Matlab ran!"
-    import time
-    time.sleep(10)
-    os.chdir(currentdir)
-    filenames = os.listdir(settings.MEDIA_ROOT + 'result')
-    for f in filenames:
-        print f 
-        if filename in f:
-            lab_result_afb_store(user, f)
+    os.chdir(model_path)
+    if engine == 'python':
+        result = int(detect_mtb('target/' + filename))
+    elif engine == 'matlab':
+        os.system("%s/run_tbdetect.sh /usr/local/MATLAB/MATLAB_Runtime/v85/ %s" % (model_path, filename))
+        print "Matlab ran!"
+        import time
+        time.sleep(10)
+        os.chdir(currentdir)
+        filenames = os.listdir(settings.MEDIA_ROOT + 'result')
+        for f in filenames:
+            if filename in f:
+                parameters = f.split('_')
+                result = int(parameters[0])
+    identifier = f.split('_')[-1].split('.')[0]
+    lab_result_afb_store(identifier, result, user, filename)
 
 def lab_result_show(request, patient_id, lab_result_id):
     patient = Patient.objects.get(id=patient_id)
@@ -423,7 +427,15 @@ def handle_upload(request, field_name):
 def send_SMS(text, phone_number):
     # subprocess.Popen('echo "%s" | gammu sendsms TEXT %s' % (text, phone_number))
     try:
-        path_to_gammu = os.path.join(settings.BASE_DIR, 'gammu/bin/smsdrc')
-        subprocess.Popen("gammu-smsd-inject -c %s TEXT %s -text \"%s\"" % (path_to_gammu, phone_number, text))
-    except:
-        pass
+        # path_to_gammu = os.path.join(settings.BASE_DIR, 'gammu/bin/smsdrc')
+        # subprocess.Popen("gammu-smsd-inject -c %s TEXT %s -text \"%s\"" % (path_to_gammu, phone_number, text))
+        account_sid = "AC986275e7e5eb4d51a7c9951539be59a8" # Your Account SID from www.twilio.com/console
+        auth_token  = "c5b5a1bd660f5e5c450a3431230da485"  # Your Auth Token from www.twilio.com/console
+
+        client = TwilioRestClient(account_sid, auth_token)
+
+        message = client.messages.create(body=text,
+                    to=phone_number,    # Replace with your phone number
+                    from_="+18573050486") # Replace with your Twilio number
+    except TwilioRestException as e:
+        print e
