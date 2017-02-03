@@ -1,3 +1,4 @@
+from django.conf import settings
 from keras.models import load_model
 from keras.utils import np_utils
 from scipy import misc
@@ -5,13 +6,14 @@ from scipy import misc
 import glob
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 nb_classes = 2
 kernel_size = (160, 160)
 stride = 160
 downsample = 8
 sample_size = 1000
-model = load_model('quinn.h5')
+model = load_model(os.path.join(settings.BASE_DIR, 'media/quinn.h5'))
 
 def create_patches(img, size, step, downsample=1, debug=False):
     height, width, c = img.shape
