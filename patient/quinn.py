@@ -13,7 +13,6 @@ kernel_size = (160, 160)
 stride = 160
 downsample = 8
 sample_size = 1000
-model = load_model(os.path.join(settings.BASE_DIR, 'media/quinn.h5'))
 
 def create_patches(img, size, step, downsample=1, debug=False):
     height, width, c = img.shape
@@ -21,9 +20,9 @@ def create_patches(img, size, step, downsample=1, debug=False):
     rows = (height - size) / step + 1
 
     if debug:
-        print("Rows:", rows)
-        print("Columns:", cols)
-        print(img.shape)
+    	print("Rows:", rows)
+    	print("Columns:", cols)
+    	print(img.shape)
 
     img = np.rollaxis(img, 2)
 
@@ -37,6 +36,7 @@ def create_patches(img, size, step, downsample=1, debug=False):
     return np.concatenate(patches), rows, cols
 
 def detect_mtb(f):
+    model = load_model(os.path.join(settings.BASE_DIR, 'media/quinn.h5'))
     img = misc.imread(f)
     X, rows, cols = create_patches(img, kernel_size[0], stride, downsample)
     X = X.astype('float32')
@@ -46,4 +46,7 @@ def detect_mtb(f):
 
     pos = np.sum(y_pred, axis=0)[1]
     neg = np.sum(y_pred, axis=0)[0]
+
+    print pos
+
     return pos
