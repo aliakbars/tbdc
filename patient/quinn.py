@@ -58,5 +58,4 @@ def detect_mtb(f):
     pos = np.sum(y_pred, axis=0)[1]
     neg = np.sum(y_pred, axis=0)[0]
 
-    print pos
     return pos

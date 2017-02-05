@@ -11,6 +11,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from patient.models import *
 from patient.quinn import detect_mtb
+from shutil import move
 from datetime import datetime, date
 from twilio.rest import TwilioRestClient
 import json
@@ -392,6 +393,7 @@ def save_result(filename, user, engine='python'):
     if engine == 'python':
         logger.info("Keras ran!")
         result = int(detect_mtb('target/' + filename))
+        move('target/' + filename, 'result/' + filename)
         if result < 3:
             result = 0
     elif engine == 'matlab':
